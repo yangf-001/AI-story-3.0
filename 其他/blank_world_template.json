@@ -1,0 +1,36 @@
+{
+  "version": "1.1",
+  "worldId": "",
+  "settings": {
+    "name": "",
+    "type": "自定义",
+    "settings": {
+      "tone": "中性",
+      "timeStart": "",
+      "adultContent": 50,
+      "mode": "互动"
+    },
+    "worldview": "",
+    "background": "",
+    "rules": [],
+    "keywords": [],
+    "hentaiSettings": {
+      "enabled": true,
+      "intensity": 50,
+      "variety": 50,
+      "scenes": {
+        "dialogue": true,
+        "items": true,
+        "action": true,
+        "body": true,
+        "pose": true,
+        "location": true,
+        "style": true,
+        "extreme": false,
+        "weird": false
+      }
+    }
+  },
+  "characters": [],
+  "exportTime": ""
+}

@@ -1,0 +1,79 @@
+const PluginSystem = {
+    plugins: {},
+    loaded: false,
+
+    register(name, plugin) {
+        if (this.plugins[name]) {
+            console.warn(`Plugin ${name} already registered, overwriting...`);
+        }
+        this.plugins[name] = {
+            ...plugin,
+            name,
+            enabled: true
+        };
+        console.log(`Plugin registered: ${name}`);
+    },
+
+    unregister(name) {
+        delete this.plugins[name];
+    },
+
+    enable(name) {
+        if (this.plugins[name]) {
+            this.plugins[name].enabled = true;
+            this.plugins[name].onEnable?.();
+        }
+    },
+
+    disable(name) {
+        if (this.plugins[name]) {
+            this.plugins[name].enabled = false;
+            this.plugins[name].onDisable?.();
+        }
+    },
+
+    get(name) {
+        return this.plugins[name];
+    },
+
+    getAll() {
+        return Object.values(this.plugins);
+    },
+
+    getEnabled() {
+        return Object.values(this.plugins).filter(p => p.enabled);
+    },
+
+    async init() {
+        for (const plugin of Object.values(this.plugins)) {
+            if (plugin.enabled && plugin.init) {
+                await plugin.init();
+            }
+        }
+        this.loaded = true;
+        console.log('All plugins initialized');
+    },
+
+    getFeatures() {
+        return this.getEnabled().map(p => ({
+            name: p.name,
+            description: p.description,
+            features: p.features || []
+        }));
+    },
+
+    triggerPluginEvent(eventName, data) {
+        const enabledPlugins = this.getEnabled();
+        for (const plugin of enabledPlugins) {
+            if (plugin.onPluginEvent) {
+                try {
+                    plugin.onPluginEvent(eventName, data);
+                } catch (e) {
+                    console.error(`Plugin ${plugin.name} event error:`, e);
+                }
+            }
+        }
+    }
+};
+
+window.PluginSystem = PluginSystem;

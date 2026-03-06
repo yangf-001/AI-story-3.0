@@ -1,0 +1,40 @@
+[
+  {
+    "id": "",
+    "name": "",
+    "isMain": false,
+    "baseProfile": {
+      "age": 0,
+      "gender": "",
+      "appearance": "",
+      "personality": "",
+      "background": ""
+    },
+    "dynamicProfile": {
+      "currentStatus": "",
+      "mood": "",
+      "location": ""
+    },
+    "stats": {
+      "health": 100,
+      "energy": 100,
+      "arousal": 0,
+      "affection": 50,
+      "orgasm": 0,
+      "sexualExperience": 0,
+      "sexualSensitivity": 0,
+      "sexualSatisfaction": 0,
+      "sexualFantasy": 0
+    },
+    "出场信息": {
+      "isActive": true,
+      "出场条件": "",
+      "出场场景": [],
+      "出场概率": 50
+    },
+    "inventory": [],
+    "relationships": {},
+    "status": "正常",
+    "worldId": ""
+  }
+]

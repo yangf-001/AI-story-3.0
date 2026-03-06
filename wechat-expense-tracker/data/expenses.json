@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "amount": 0.0,
+    "category": "其他",
+    "description": "",
+    "timestamp": "2026-03-06T16:59:16.635489",
+    "date": "2026-03-06"
+  },
+  {
+    "id": 2,
+    "amount": 0.0,
+    "category": "其他",
+    "description": "",
+    "timestamp": "2026-03-06T17:00:38.175591",
+    "date": "2026-03-06"
+  },
+  {
+    "id": 3,
+    "amount": 35.0,
+    "category": "餐饮",
+    "description": "测试",
+    "timestamp": "2026-03-06T17:01:17.028532",
+    "date": "2026-03-06"
+  }
+]

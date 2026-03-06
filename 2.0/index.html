@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI故事 - 2.0</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="app">
+        <div class="sidebar">
+            <h1>✨ AI故事</h1>
+            <nav>
+                <button class="nav-btn" onclick="window.history.back()">⬅️ 返回</button>
+                <button class="nav-btn active" data-page="home">🏠 首页</button>
+                <button class="nav-btn" data-page="worlds">🌍 世界</button>
+                <button class="nav-btn" data-page="characters">👤 角色</button>
+                <button class="nav-btn" data-page="story">📖 故事</button>
+                <button class="nav-btn" data-page="storage">📦 存储库</button>
+                <button class="nav-btn" data-page="settings">⚙️ 设置</button>
+                <button class="nav-btn" data-page="plugins">🔌 插件</button>
+            </nav>
+        </div>
+        
+        <div class="main" id="mainContent"></div>
+        
+        <div class="right">
+            <div id="rightPanel"></div>
+        </div>
+    </div>
+    
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">标题</h3>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <div class="mobile-nav" id="mobileNav"></div>
+
+    <script src="js/plugin.js"></script>
+    <script src="js/view.js"></script>
+    
+    <script src="js/plugins/inventory/index.js"></script>
+    <script src="js/plugins/task/index.js"></script>
+    
+    <script src="js/plugins/inventory/view.js"></script>
+    <script src="js/plugins/task/view.js"></script>
+    
+    <script src="js/ai.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/story.js"></script>
+    <script src="js/app.js"></script>
+    
+    <style>
+        .plugin-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .plugin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent);
+        }
+        
+        .plugin-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+        
+        .plugin-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .plugin-desc {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: var(--bg);
+            border-radius: 6px;
+        }
+        
+        .stat-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-bottom: 4px;
+        }
+        
+        .stat-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .stat-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        
+        .info-item {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 4px;
+        }
+        
+        .info-value {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+    </style>
+</body>
+</html>

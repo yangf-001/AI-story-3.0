@@ -1,0 +1,952 @@
+# 物品库预设模板
+# 格式：名称|类型|描述|效果
+# 类型：misc(杂物) food(食物) potion(药水) weapon(武器) tool(工具) adult(成人物品)
+# 效果：health(生命) energy(体力) charm(魅力) intelligence(智力) strength(力量) affection(好感) sexArousal(性欲望) sexLibido(性欲) sexSensitivity(敏感度) agility(敏捷)
+
+[药水-恢复]
+治疗药水|potion|恢复生命值的疗伤药|{"health": 30}
+大治疗药水|potion|大量恢复生命值的疗伤药|{"health": 60}
+超级治疗药水|potion|瞬间恢复大量生命的圣药|{"health": 100}
+魔法药水|potion|恢复体力的神奇药水|{"energy": 30}
+大魔法药水|potion|大量恢复体力的神奇药水|{"energy": 60}
+超级魔法药水|potion|恢复大量体力的神奇药水|{"energy": 100}
+恢复药水|potion|全面恢复状态的药水|{"health": 25, "energy": 25}
+完全恢复药水|potion|完全恢复所有状态的药水|{"health": 50, "energy": 50}
+解毒药水|potion|解除中毒状态的药水|{"health": 10}
+清醒药水|potion|解除混乱状态的药水|{"intelligence": 10}
+圣水|potion|神圣的清水|{"health": 50}
+神圣圣水|potion|高度神圣的水|{"health": 80}
+月光露水|potion|月光凝聚的露水|{"health": 40, "energy": 20}
+太阳圣水|potion|蕴含太阳能量的圣水|{"health": 60, "charm": 10}
+生命之泉|potion|传说中的生命泉水|{"health": 100, "energy": 100}
+冰心泉水|potion|冰凉的山泉水|{"health": 35, "energy": 15}
+温泉水|potion|天然的温泉水|{"health": 45, "energy": 30}
+灵泉|potion|蕴含灵气的泉水|{"health": 50, "intelligence": 10}
+治愈之露|potion|治愈伤口的露水|{"health": 55}
+
+[药水-增益]
+魅力药水|potion|提升个人魅力的魔药|{"charm": 20}
+大魅力药水|potion|大幅提升个人魅力的魔药|{"charm": 40}
+超级魅力药水|potion|极致提升魅力的魔药|{"charm": 60}
+永恒魅力药水|potion|永久提升魅力的神圣药水|{"charm": 80}
+智力药水|potion|提升智力的魔法药剂|{"intelligence": 20}
+大智力药水|potion|大幅提升智力的魔法药剂|{"intelligence": 40}
+超级智力药水|potion|极致提升智力的魔法药剂|{"intelligence": 60}
+智慧源泉|potion|获得智慧源泉的魔法药剂|{"intelligence": 80}
+力量药水|potion|增强力量的魔药|{"strength": 20}
+大力量药水|potion|大幅增强力量的魔药|{"strength": 40}
+超级力量药水|potion|极致增强力量的魔药|{"strength": 60}
+泰坦之力|potion|获得泰坦般的力量|{"strength": 80}
+敏捷药水|potion|提升敏捷的身法药剂|{"agility": 20}
+大敏捷药水|potion|大幅提升敏捷的身法药剂|{"agility": 40}
+超级敏捷药水|potion|极致提升敏捷的药剂|{"agility": 60}
+风之速|potion|拥有风一般的速度|{"agility": 80}
+全能药水|potion|全属性提升的神奇药水|{"health": 15, "energy": 15, "charm": 15, "intelligence": 15, "strength": 15}
+完美强化药水|potion|全属性大幅提升|{"health": 30, "energy": 30, "charm": 30, "intelligence": 30, "strength": 30, "agility": 30}
+神之祝福|potion|获得神的祝福|{"health": 50, "energy": 50, "charm": 50, "intelligence": 50, "strength": 50, "agility": 50}
+龙之血脉药水|potion|获得龙的血脉|{"strength": 45, "charm": 30, "health": 40}
+凤凰之血药水|potion|获得凤凰的力量|{"charm": 45, "intelligence": 35, "energy": 40}
+精灵之露|potion|精灵族的秘药|{"agility": 40, "charm": 35, "intelligence": 30}
+贤者智慧药水|potion|贤者的智慧|{"intelligence": 50, "charm": 20}
+帝王之气药水|potion|帝王般的气质|{"charm": 50, "strength": 25, "intelligence": 20}
+
+[药水-特殊]
+媚药|adult|让人产生好感的药水|{"charm": 15, "affection": 10}
+魅惑药水|adult|增强魅惑能力的药水|{"charm": 25, "sexArousal": 15}
+催情药水|adult|激发欲望的粉色药水|{"sexArousal": 25, "sexLibido": 20}
+春药|adult|激发性欲的药物|{"sexArousal": 30, "sexLibido": 25}
+媚药酒|adult|添加了媚药的酒水|{"charm": 10, "energy": 10, "affection": 15}
+兴奋剂|potion|暂时提升状态的药剂|{"strength": 15, "energy": 15}
+虚弱药剂|potion|让人虚弱的药剂|{"strength": -15}
+混乱药剂|potion|让人混乱的药剂|{"intelligence": -15}
+安眠药|potion|让人昏睡的药物|{"energy": -10}
+魅惑药剂|adult|强烈魅惑的药剂|{"charm": 35, "sexArousal": 20}
+迷情香水|adult|令人迷醉的香水|{"charm": 20, "sexArousal": 15}
+欲望之露|adult|激发原始欲望的露水|{"sexArousal": 35, "sexLibido": 30}
+销魂药水|adult|令人销魂的魔法药水|{"sexArousal": 40, "sexLibido": 35}
+爱之甜蜜|adult|甜蜜爱情的象征|{"affection": 25, "charm": 15}
+情网药剂|adult|让人坠入爱河的药剂|{"affection": 30, "sexArousal": 20}
+迷魂香|adult|迷惑心神的香料|{"intelligence": -20, "affection": 25}
+忘情水|adult|忘记一切情感的水|{"affection": -30, "intelligence": -10}
+绝情毒|adult|断绝一切情感的毒药|{"affection": -50}
+勾魂香水|adult|勾魂夺魄的香水|{"charm": 40, "sexArousal": 25}
+天人合一药剂|adult|天人合一的奇妙药剂|{"charm": 30, "sexArousal": 30, "intelligence": 15}
+
+[食物-水果]
+苹果|food|新鲜的红苹果|{"health": 10, "energy": 5}
+梨|food|甘甜多汁的梨|{"health": 8, "energy": 5}
+香蕉|food|营养丰富的水果|{"energy": 12}
+葡萄|food|一串紫葡萄|{"health": 8, "energy": 8}
+橙子|food|富含维生素C|{"health": 12}
+西瓜|food|清凉解渴的大西瓜|{"health": 15, "energy": 10}
+草莓|food|新鲜的草莓|{"health": 6, "charm": 5}
+桃子|food|多汁的桃子|{"health": 10}
+樱桃|food|鲜美的小樱桃|{"health": 8, "charm": 8}
+芒果|food|香甜的热带水果|{"health": 12, "energy": 8}
+菠萝|food|酸甜可口的菠萝|{"health": 14, "energy": 6}
+柚子|food|清爽的柚子|{"health": 16, "energy": 5}
+石榴|food|颗粒饱满的石榴|{"health": 15, "energy": 8}
+荔枝|food|甜美多汁的荔枝|{"health": 10, "charm": 5}
+龙眼|food|补益安神的龙眼|{"health": 12, "energy": 10}
+猕猴桃|food|富含维生素的猕猴桃|{"health": 14, "energy": 6}
+火龙果|food|营养丰富的火龙果|{"health": 12, "energy": 8}
+椰子|food|甘甜的椰子水|{"health": 15, "energy": 12}
+山竹|food|清爽的山竹|{"health": 10, "energy": 6}
+榴莲|food|水果之王|{"health": 18, "energy": 15}
+
+[食物-饱腹]
+面包|food|香软的白面包|{"energy": 15}
+烤肉|food|美味的烤肉类|{"health": 15, "energy": 20}
+烤鱼|food|鲜美的烤鱼|{"health": 12, "energy": 15}
+炖肉|food|香气四溢的炖肉|{"health": 20, "energy": 20}
+粥|food|热腾腾的白粥|{"energy": 10}
+馒头|food|松软的白馒头|{"energy": 12}
+汤面|food|热气腾腾的汤面|{"health": 10, "energy": 18}
+炒饭|food|香气扑鼻的炒饭|{"energy": 22}
+煎饼|food|香脆的煎饼|{"energy": 16}
+水饺|food|美味的水饺|{"health": 12, "energy": 15}
+包子|food|皮薄馅大的包子|{"health": 14, "energy": 16}
+油条|food|酥脆的油条|{"energy": 18}
+烧饼|food|香气四溢的烧饼|{"energy": 15}
+煎蛋|food|金黄的煎蛋|{"health": 10, "energy": 12}
+三明治|food|营养丰富的三明治|{"health": 12, "energy": 15}
+汉堡|food|美味的汉堡|{"health": 15, "energy": 20}
+披萨|food|意大利披萨|{"health": 18, "energy": 22}
+意面|food|意大利面|{"health": 14, "energy": 18}
+寿司|food|日式寿司|{"health": 12, "energy": 15}
+盖浇饭|food|美味的盖浇饭|{"energy": 20}
+麻辣烫|food|麻辣鲜香的麻辣烫|{"health": 15, "energy": 18}
+火锅|food|热气腾腾的火锅|{"health": 25, "energy": 25}
+烧烤|food|香味扑鼻的烧烤|{"health": 20, "energy": 22}
+自助餐|food|丰盛的自助餐|{"health": 30, "energy": 30}
+满汉全席|food|豪华的满汉全席|{"health": 40, "energy": 40, "charm": 10}
+
+[食物-增益]
+蛋糕|food|甜美的蛋糕|{"charm": 10, "energy": 10}
+巧克力|food|浓郁的黑巧克力|{"charm": 5, "energy": 10}
+葡萄酒|food|醇香的葡萄酒|{"charm": 10, "energy": 10}
+香槟|food|高档的香槟酒|{"charm": 15, "energy": 8}
+奶茶|food|香甜的奶茶|{"charm": 8, "energy": 12}
+咖啡|food|提神醒脑的咖啡|{"energy": 15, "intelligence": 5}
+牛奶|food|新鲜的牛奶|{"health": 5, "energy": 10}
+蜂蜜|food|天然的甜蜜蜂蜜|{"health": 8, "charm": 8}
+水果篮|food|各种新鲜水果的篮子|{"health": 20, "energy": 15}
+豪华套餐|food|丰盛的大餐|{"health": 25, "energy": 25, "charm": 10}
+马卡龙|food|法式甜点马卡龙|{"charm": 12, "energy": 8}
+提拉米苏|food|意大利甜点|{"charm": 10, "energy": 12}
+芝士蛋糕|food|浓郁芝士蛋糕|{"charm": 8, "energy": 14}
+冰淇淋|food|美味的冰淇淋|{"charm": 8, "energy": 8}
+水果派|food|香甜的水果派|{"charm": 7, "energy": 10}
+焦糖布丁|food|嫩滑的焦糖布丁|{"charm": 9, "energy": 8}
+可丽饼|food|法式可丽饼|{"charm": 10, "energy": 10}
+松饼|food|松软的松饼|{"charm": 6, "energy": 12}
+甜甜圈|food|甜蜜的甜甜圈|{"charm": 5, "energy": 14}
+奶酪|food|香浓的奶酪|{"health": 8, "energy": 10}
+红茶|food|醇厚的红茶|{"charm": 5, "energy": 10}
+绿茶|food|清香的绿茶|{"health": 6, "energy": 8}
+果汁|food|新鲜的水果果汁|{"health": 10, "energy": 8}
+奶昔|food|美味的奶昔|{"charm": 8, "energy": 12}
+鸡尾酒|food|绚丽的水果鸡尾酒|{"charm": 15, "energy": 10}
+威士忌|food|陈年威士忌|{"charm": 12, "energy": 8}
+清酒|food|日本清酒|{"charm": 10, "energy": 8}
+伏特加|food|纯正的伏特加|{"energy": 12}
+龙舌兰|food|墨西哥龙舌兰|{"charm": 10, "energy": 10}
+红酒|food|高档的红酒|{"charm": 18, "energy": 8}
+白兰地|food|珍贵的白兰地|{"charm": 20, "energy": 10}
+花茶|food|芳香的花茶|{"charm": 8, "energy": 8}
+养生茶|food|滋补养生的茶|{"health": 12, "energy": 8}
+
+[武器-剑]
+长剑|weapon|锋利的铁制长剑|{"strength": 15}
+短剑|weapon|轻便的防身短剑|{"strength": 10}
+重剑|weapon|威力巨大的重剑|{"strength": 25}
+细剑|weapon|优雅的细身剑|{"strength": 12, "charm": 5}
+魔法剑|weapon|附有魔力的长剑|{"strength": 20, "intelligence": 10}
+魔剑|weapon|附有魔法的大剑|{"strength": 25, "intelligence": 5}
+激光剑|weapon|未来科技的激光武器|{"strength": 30}
+骑士剑|weapon|骑士专用的阔剑|{"strength": 22}
+十字军剑|weapon|十字军使用的圣剑|{"strength": 25, "charm": 10}
+双手剑|weapon|需要双手使用的大剑|{"strength": 35}
+刺剑|weapon|优雅的刺击剑|{"strength": 15, "agility": 8}
+斩马刀|weapon|长柄大刀|{"strength": 30}
+仪式剑|weapon|用于仪式典礼的剑|{"strength": 10, "charm": 20}
+暗黑剑|weapon|蕴含黑暗力量的剑|{"strength": 30, "intelligence": -5}
+光明剑|weapon|蕴含光明力量的神圣之剑|{"strength": 25, "charm": 15}
+龙泉剑|weapon|传说中的神剑|{"strength": 40, "charm": 20}
+太刀|weapon|日本太刀|{"strength": 22, "charm": 10}
+唐刀|weapon|中国古代唐刀|{"strength": 25, "charm": 8}
+剑豪刀|weapon|剑豪的佩刀|{"strength": 28, "agility": 10}
+
+[武器-刀剑]
+武士刀|weapon|锋利的日本武士刀|{"strength": 18, "charm": 5}
+砍刀|weapon|实用的砍伐刀具|{"strength": 15}
+匕首|weapon|小巧的防身匕首|{"strength": 10}
+飞刀|weapon|精准的投掷飞刀|{"strength": 12, "agility": 5}
+忍者刀|weapon|忍者使用的暗器|{"strength": 14, "agility": 8}
+大砍刀|weapon|重型砍刀|{"strength": 25}
+军刀|weapon|军用的作战刀具|{"strength": 20}
+开山刀|weapon|野外生存刀具|{"strength": 18}
+廓尔喀刀|weapon|尼泊尔弯刀|{"strength": 22}
+剑形刀|weapon|剑形刀具|{"strength": 16, "charm": 5}
+东洋刀|weapon|东洋风格的刀|{"strength": 20, "charm": 8}
+西洋剑|weapon|西洋击剑|{"strength": 14, "agility": 10}
+单手刀|weapon|单手使用的刀|{"strength": 16}
+双刀|weapon|成双成对的刀|{"strength": 20, "agility": 10}
+太极刀|weapon|中国功夫刀法|{"strength": 18, "charm": 10}
+八卦刀|weapon|八卦门刀法|{"strength": 20, "agility": 5}
+苗刀|weapon|苗族宝刀|{"strength": 24, "charm": 8}
+雁翎刀|weapon|古代官府用刀|{"strength": 18, "charm": 6}
+柳叶刀|weapon|轻盈的刀|{"strength": 14, "agility": 12}
+飞镖|weapon|精准的暗器|{"strength": 10, "agility": 8}
+手里剑|weapon|忍者暗器|{"strength": 12, "agility": 10}
+苦无|weapon|忍者专用暗器|{"strength": 8, "agility": 12}
+
+[武器-远程]
+弓箭|weapon|精准的狩猎弓箭|{"strength": 12, "agility": 8}
+十字弓|weapon|强劲的远程武器|{"strength": 18}
+法杖|weapon|蕴含魔力的法杖|{"intelligence": 20, "strength": 5}
+魔杖|weapon|施法用的魔法棒|{"intelligence": 25}
+权杖|weapon|象征权力的权杖|{"charm": 15, "strength": 10}
+鞭子|weapon|皮质的鞭子|{"strength": 12, "agility": 5}
+长弓|weapon|射程极远的长弓|{"strength": 15, "agility": 10}
+复合弓|weapon|现代复合弓|{"strength": 18, "agility": 12}
+猎弓|weapon|狩猎专用弓|{"strength": 14, "agility": 9}
+战弓|weapon|战场使用的强弓|{"strength": 16, "agility": 8}
+精灵弓|weapon|精灵族制的弓箭|{"strength": 15, "agility": 15}
+魔法弓|weapon|附有魔法的弓|{"strength": 15, "intelligence": 10}
+狙击弓|weapon|远程狙击弓|{"strength": 20, "agility": 12}
+轻十字弓|weapon|轻便的十字弓|{"strength": 14, "agility": 6}
+重十字弓|weapon|强劲的重十字弓|{"strength": 22}
+连弩|weapon|可连续发射的弩|{"strength": 18, "agility": 10}
+诸葛弩|weapon|古代连弩|{"strength": 16, "agility": 12}
+弓骑兵弩|weapon|骑兵专用弩|{"strength": 15, "agility": 8}
+火焰法杖|weapon|附有火焰魔力的法杖|{"intelligence": 25, "strength": 10}
+冰霜法杖|weapon|附有冰霜魔力的法杖|{"intelligence": 25, "strength": 10}
+雷电法杖|weapon|附有雷电魔力的法杖|{"intelligence": 28, "strength": 8}
+光明法杖|weapon|光明魔法杖|{"intelligence": 25, "charm": 15}
+暗黑法杖|weapon|暗黑魔法杖|{"intelligence": 30, "strength": 5}
+星辰魔杖|weapon|蕴含星辰力量的魔杖|{"intelligence": 35, "charm": 10}
+贤者之杖|tool|贤者使用的法杖|{"intelligence": 40}
+帝王权杖|tool|帝王专属权杖|{"charm": 25, "strength": 15}
+天使权杖|tool|天使使用的权杖|{"charm": 30, "intelligence": 20}
+恶魔权杖|tool|恶魔拥有的权杖|{"intelligence": 30, "strength": 10}
+皮鞭|weapon|皮质鞭子|{"strength": 10, "agility": 8}
+软鞭|weapon|柔软灵活的鞭子|{"strength": 8, "agility": 12}
+九节鞭|weapon|中国功夫鞭子|{"strength": 12, "agility": 15}
+钢鞭|weapon|金属制成的鞭子|{"strength": 18, "agility": 5}
+流星锤|weapon|远程投掷武器|{"strength": 20, "agility": 8}
+飞蝗石|weapon|投掷用的石子|{"strength": 8, "agility": 10}
+袖箭|weapon|藏在袖子里的箭|{"strength": 10, "agility": 12}
+吹箭|weapon|吹气发射的箭|{"strength": 6, "agility": 15}
+毒镖|weapon|涂有毒药的镖|{"strength": 10, "agility": 8}
+回旋镖|weapon|可飞回的镖|{"strength": 12, "agility": 10}
+
+[工具-探索]
+魔法卷轴|tool|记载魔法的卷轴|{"intelligence": 20}
+神秘钥匙|tool|可以打开某些锁|{}
+万能钥匙|tool|可以打开大部分锁|{}
+望远镜|tool|可以观察远处的物品|{"agility": 5}
+指南针|tool|辨别方向的工具|{}
+地图|tool|记录地点的地图|{}
+灯笼|tool|照亮黑暗的工具|{"energy": 5}
+火把|tool|照明的火光|{"energy": 5}
+绳索|tool|攀爬或捆绑用|{}
+梯子|tool|攀爬用的高梯|{}
+火柴|tool|生火用的火柴|{}
+打火石|tool|取火的工具|{}
+油灯|tool|照明的油灯|{"energy": 8}
+手电筒|tool|现代照明工具|{"agility": 5}
+矿工灯|tool|采矿用灯|{"energy": 6}
+信号弹|tool|求救信号工具|{}
+烟雾弹|tool|掩护逃跑的工具|{"agility": 10}
+荧光棒|tool|发光照明工具|{}
+夜视仪|tool|夜间观察工具|{"agility": 15}
+放大镜|tool|观察细节的工具|{"intelligence": 5}
+显微镜|tool|观察微小物体的工具|{"intelligence": 10}
+望远镜套装|tool|高级望远镜套装|{"agility": 10}
+军用地图|tool|军事用途的地图|{}
+城市地图|tool|城市导航地图|{}
+探险地图|tool|探险专用地图|{}
+藏宝图|tool|记载宝藏位置的地图|{}
+保险箱钥匙|tool|打开保险箱的钥匙|{}
+仓库钥匙|tool|仓库专用钥匙|{}
+监狱钥匙|tool|打开监狱的钥匙|{}
+密码锁|tool|需要密码的锁|{}
+指纹锁|tool|指纹识别的锁|{}
+电子锁|tool|电子控制的锁|{}
+登山镐|tool|攀登山峰的镐子|{"agility": 10}
+登山绳|tool|登山用的安全绳|{}
+登山靴|tool|登山专用靴子|{"agility": 12}
+帐篷|tool|野外露营帐篷|{}
+睡袋|tool|野外睡觉用品|{}
+防潮垫|tool|防潮用的垫子|{}
+野外炊具|tool|野外做饭的工具|{}
+净水器|tool|净化水源的工具|{}
+急救箱|tool|急救医疗箱|{"health": 15}
+工具箱|tool|各种工具的箱子|{}
+绳梯|tool|便携式绳梯|{}
+伸缩梯|tool|可伸缩的梯子|{}
+脚扣|tool|攀爬电线杆用|{}
+滑轮|tool|升降用滑轮|{}
+吊索|tool|吊运用的索具|{}
+
+[工具-特殊]
+千里眼|tool|能看到很远地方的魔法道具|{"intelligence": 15}
+隐形斗篷|tool|可以隐身的斗篷|{"agility": 20, "charm": 10}
+传送卷轴|tool|可以瞬间移动的卷轴|{"intelligence": 15}
+空间袋|tool|可以存放物品的袋子|{}
+魔法书|tool|记载强大魔法的书|{"intelligence": 25}
+占卜球|tool|占卜未来的水晶球|{"intelligence": 20}
+召唤符|tool|召唤使魔的符咒|{"intelligence": 20}
+契约书|tool|具有约束力的契约|{}
+护身符|tool|保护安全的护身符|{"health": 10}
+平安符|tool|祈求平安的符咒|{"health": 15}
+七芒星|tool|魔法阵的核心|{"intelligence": 20}
+魔法瓶|tool|装魔法液体的瓶子|{"intelligence": 15}
+星盘|tool|占星用的工具|{"intelligence": 20}
+塔罗牌|tool|占卜用的塔罗牌|{"intelligence": 15}
+符文石|tool|刻有符文的石头|{"intelligence": 18}
+附魔石|tool|可以附魔的石头|{"intelligence": 20}
+进化石|tool|使物品进化的石头|{"intelligence": 25}
+召唤石|tool|召唤生物的石头|{"intelligence": 25}
+传送石|tool|传送用的石头|{"intelligence": 20}
+时空门钥匙|tool|打开时空门的钥匙|{"intelligence": 30}
+贤者之书|tool|记载所有知识的书|{"intelligence": 40}
+魔法手册|tool|魔法师的手册|{"intelligence": 25}
+咒语书|tool|记载各种咒语的书|{"intelligence": 25}
+炼金手册|tool|炼金术士的手册|{"intelligence": 30}
+炼金炉|tool|炼金用的炉子|{"intelligence": 25}
+魔法锅|tool|熬制魔药的锅|{"intelligence": 20}
+扫帚|tool|女巫的扫帚|{"agility": 15}
+飞毯|tool|可以飞行的毯子|{"agility": 20}
+云朵|tool|可以站立的云|{"agility": 25}
+月光宝盒|tool|穿梭时空的宝盒|{"intelligence": 35}
+时光机|tool|穿越时间的机器|{"intelligence": 40}
+任意门|tool|通往任何地方的門|{"intelligence": 30}
+隐身戒指|tool|隐身的戒指|{"agility": 25}
+飞行羽翼|tool|可以飞行的羽翼|{"agility": 30}
+水下呼吸器|tool|水下呼吸的道具|{"agility": 15}
+防弹衣|tool|防护子弹的衣服|{"health": 20}
+隐身衣|tool|隐身的衣服|{"agility": 25}
+透视镜|tool|可以透视的镜子|{"intelligence": 20}
+读心术手册|tool|读心术的书籍|{"intelligence": 30}
+心灵感应器|tool|心灵感应的工具|{"intelligence": 25}
+预知球|tool|预知未来的水晶球|{"intelligence": 30}
+许愿瓶|tool|实现愿望的瓶子|{"charm": 20, "intelligence": 20}
+诅咒娃娃|tool|施加诅咒的娃娃|{"intelligence": 20}
+护盾发生器|tool|生成护盾的装置|{"health": 25}
+能量护腕|tool|增强能量的护腕|{"energy": 20}
+力量腰带|tool|增强力量的腰带|{"strength": 20}
+敏捷靴子|tool|增强敏捷的靴子|{"agility": 20}
+智慧头巾|tool|增强智力的头巾|{"intelligence": 20}
+魅力胸针|tool|增加魅力的胸针|{"charm": 25}
+
+[杂物-珠宝]
+宝石|misc|一颗闪亮的宝石|{"charm": 25}
+钻石|misc|璀璨的钻石|{"charm": 35}
+金银珠宝|misc|昂贵的首饰|{"charm": 30}
+珍珠|tool|圆润的珍珠|{"charm": 25}
+翡翠|misc|碧绿的翡翠|{"charm": 28}
+红宝石|misc|鲜红的宝石|{"charm": 30}
+蓝宝石|misc|深蓝的宝石|{"charm": 30}
+戒指|misc|精美的戒指|{"charm": 15}
+项链|misc|华丽的项链|{"charm": 20}
+耳环|misc|漂亮的耳环|{"charm": 15}
+黑曜石|misc|神秘的黑曜石|{"charm": 22}
+玛瑙|misc|花纹美丽的玛瑙|{"charm": 24}
+水晶|misc|透明的水晶|{"charm": 25}
+月光石|misc|散发月光的水晶|{"charm": 28}
+星星石|misc|像星星的石头|{"charm": 30}
+蛋白石|misc|变彩的蛋白石|{"charm": 26}
+石榴石|misc|深红色的石榴石|{"charm": 27}
+托帕石|misc|蓝色的托帕石|{"charm": 24}
+紫水晶|misc|紫色的水晶|{"charm": 26}
+黄玉|misc|黄色的宝石|{"charm": 25}
+琥珀|misc|古老的琥珀|{"charm": 28}
+珊瑚|misc|美丽的珊瑚|{"charm": 25}
+玳瑁|misc|海龟的甲壳|{"charm": 20}
+砗磲|misc|大型贝壳|{"charm": 30}
+祖母绿|misc|翠绿的祖母绿|{"charm": 35}
+猫眼石|misc|像猫眼的宝石|{"charm": 32}
+欧泊|misc|七彩的欧泊石|{"charm": 33}
+坦桑石|misc|稀有的坦桑石|{"charm": 34}
+碧玺|misc|多彩的碧玺|{"charm": 28}
+玉佩|misc|玉制的佩饰|{"charm": 25}
+玉镯|misc|玉制的手镯|{"charm": 28}
+金钗|tool|金色的发钗|{"charm": 22}
+银簪|tool|银制的发簪|{"charm": 20}
+步摇|tool|古代头饰|{"charm": 25}
+发梳|tool|精美的发梳|{"charm": 18}
+胸针|misc|别致的胸针|{"charm": 15}
+臂钏|misc|手臂上的装饰|{"charm": 20}
+脚链|misc|脚上的装饰链|{"charm": 12}
+脐环|misc|肚脐装饰|{"charm": 10}
+舌钉|misc|舌头装饰|{"charm": 8}
+眉钉|misc|眉毛装饰|{"charm": 8}
+鼻环|misc|鼻子装饰|{"charm": 10}
+纹身贴|misc|临时纹身贴纸|{"charm": 5}
+
+[杂物-时尚]
+香水|misc|芳香四溢的香水|{"charm": 15}
+化妆品|misc|精致的化妆品套装|{"charm": 20}
+高跟鞋|misc|优雅的高跟鞋|{"charm": 15}
+名牌包|misc|时尚的名牌包|{"charm": 20}
+手表|misc|精致的手表|{"charm": 15}
+墨镜|tool|帅气的太阳镜|{"charm": 10}
+丝巾|misc|柔软的丝绸围巾|{"charm": 12}
+手套|misc|精致的手套|{"charm": 8}
+LV包|misc|路易威登包包|{"charm": 30}
+爱马仕包|misc|爱马仕包包|{"charm": 35}
+香奈儿包|misc|香奈儿包包|{"charm": 32}
+古驰包|misc|古驰包包|{"charm": 28}
+普拉达包|misc|普拉达包包|{"charm": 30}
+迪奥包|misc|迪奥包包|{"charm": 31}
+博柏利包|misc|博柏利包包|{"charm": 27}
+范思哲服装|misc|范思哲品牌服装|{"charm": 25}
+阿玛尼服装|misc|阿玛尼品牌服装|{"charm": 28}
+古驰服装|misc|古驰品牌服装|{"charm": 26}
+香奈儿服装|misc|香奈儿品牌服装|{"charm": 30}
+迪奥服装|misc|迪奥品牌服装|{"charm": 29}
+lv服装|misc|lv品牌服装|{"charm": 27}
+高跟鞋|tool|优雅的高跟鞋|{"charm": 15}
+坡跟鞋|tool|舒适的坡跟鞋|{"charm": 12}
+凉鞋|tool|清凉的凉鞋|{"charm": 10}
+运动鞋|tool|舒适的运动鞋|{"charm": 8}
+靴子|tool|时尚的靴子|{"charm": 14}
+拖鞋|tool|舒适的拖鞋|{"charm": 5}
+休闲装|tool|舒适的休闲装|{"charm": 10}
+正装|tool|正式的正装|{"charm": 18}
+晚礼服|tool|高贵的晚礼服|{"charm": 25}
+职业装|tool|专业的职业装|{"charm": 15}
+学生装|tool|青春的学生装|{"charm": 12}
+嘻哈装|tool|嘻哈风格服装|{"charm": 14}
+摇滚装|tool|摇滚风格服装|{"charm": 13}
+淑女装|tool|淑女风格服装|{"charm": 18}
+公主裙|tool|公主般的裙子|{"charm": 22}
+王子装|tool|王子般的服装|{"charm": 20}
+天使翅膀|tool|天使的翅膀装饰|{"charm": 25}
+恶魔尾巴|tool|恶魔的尾巴装饰|{"charm": 15}
+精灵耳朵|tool|精灵耳朵装饰|{"charm": 18}
+猫耳朵|tool|可爱的猫耳朵发箍|{"charm": 12}
+兔耳朵|tool|可爱的兔耳朵发箍|{"charm": 12}
+狐狸耳朵|tool|可爱的狐狸耳朵|{"charm": 14}
+骷髅项链|misc|朋克风格项链|{"charm": 12}
+铆钉手环|misc|朋克风格手环|{"charm": 10}
+金属别针|misc|金属质地的别针|{"charm": 8}
+刺绣贴|misc|漂亮的刺绣贴|{"charm": 6}
+
+[杂物-心意]
+情书|misc|表达爱意的信件|{"affection": 15}
+照片|misc|珍贵的照片|{"affection": 10}
+鲜花|misc|美丽的花束|{"affection": 12, "charm": 8}
+玩偶|misc|可爱的毛绒玩具|{"affection": 10}
+巧克力礼盒|misc|精美的巧克力礼盒|{"affection": 15, "charm": 10}
+音乐盒|misc|播放优美音乐的音乐盒|{"affection": 12, "charm": 8}
+相册|misc|记录回忆的相册|{"affection": 15}
+定情信物|misc|象征爱情的信物|{"affection": 20}
+玫瑰|misc|象征爱情的红玫瑰|{"affection": 15, "charm": 10}
+百合|misc|纯洁的百合花|{"affection": 10, "charm": 8}
+郁金香|misc|高贵的郁金香|{"affection": 12, "charm": 10}
+薰衣草|misc|浪漫的薰衣草|{"affection": 10, "charm": 8}
+向日葵|misc|阳光的向日葵|{"affection": 8, "charm": 6}
+满天星|misc|浪漫的满天星|{"affection": 8, "charm": 5}
+永生花|misc|永不凋谢的花|{"affection": 15, "charm": 12}
+毛绒熊|tool|可爱的毛绒熊|{"affection": 12}
+毛绒兔|tool|可爱的毛绒兔|{"affection": 12}
+毛绒狗|tool|可爱的毛绒狗|{"affection": 10}
+毛绒猫|tool|可爱的毛绒猫|{"affection": 12}
+抱枕|tool|柔软的抱枕|{"affection": 5}
+情侣手表|misc|情侣手表|{"affection": 20, "charm": 10}
+情侣戒指|misc|情侣对戒|{"affection": 25, "charm": 15}
+情侣项链|misc|情侣项链|{"affection": 22, "charm": 12}
+爱心吊坠|misc|心形的吊坠|{"affection": 18, "charm": 10}
+钥匙扣|misc|可爱的钥匙扣|{"affection": 5}
+手机壳|misc|漂亮的手机壳|{"charm": 5}
+书签|misc|精美的书签|{"affection": 5}
+明信片|misc|漂亮的明信片|{"affection": 8}
+贺卡|misc|精美的贺卡|{"affection": 8}
+生日卡|misc|生日祝福卡|{"affection": 10}
+情人节卡片|misc|情人节卡片|{"affection": 15}
+七夕礼物|misc|七夕节礼物|{"affection": 18}
+纪念日礼物|misc|纪念日礼物|{"affection": 20}
+求婚戒指|misc|求婚用的钻戒|{"affection": 35, "charm": 25}
+结婚证|misc|象征婚姻的证件|{"affection": 30, "charm": 15}
+婚戒|misc|结婚戒指|{"affection": 30, "charm": 20}
+嫁妆|misc|出嫁的嫁妆|{"affection": 25, "charm": 15}
+聘礼|misc|求婚的聘礼|{"affection": 25, "charm": 15}
+订婚戒指|misc|订婚戒指|{"affection": 28, "charm": 18}
+
+
+[杂物-特殊]
+媚惑之戒|tool|增加魅惑能力的戒指|{"charm": 30}
+力量之戒|tool|增加力量的戒指|{"strength": 20}
+智慧之书|tool|增加智慧的书|{"intelligence": 25}
+许愿石|tool|可以实现愿望的石头|{"charm": 20, "intelligence": 20}
+龙鳞|tool|神奇的龙之鳞片|{"strength": 15, "charm": 10}
+凤凰羽毛|tool|神鸟的羽毛|{"charm": 20, "intelligence": 10}
+麒麟角|tool|神兽麒麟的角|{"strength": 25, "charm": 20}
+天使羽毛|tool|天使的羽毛|{"charm": 30, "intelligence": 15}
+恶魔之角|tool|恶魔的角|{"strength": 20, "charm": 10}
+独角兽之角|tool|独角兽的角|{"charm": 35, "intelligence": 20}
+美人鱼鳞片|tool|美人鱼的鳞片|{"charm": 30, "agility": 15}
+精灵之尘|tool|精灵族的魔法尘埃|{"charm": 25, "agility": 20}
+矮人锻造石|tool|矮人锻造用的石头|{"strength": 20}
+巨人之力护腕|tool|获得巨人力量的护腕|{"strength": 30}
+极速之靴|tool|获得极速的靴子|{"agility": 30}
+智慧之冠|tool|增加智慧的皇冠|{"intelligence": 30}
+魅力之冠|tool|增加魅力的皇冠|{"charm": 30}
+王者之剑|tool|王者之剑|{"strength": 35, "charm": 20}
+贤者之石|tool|传说中的贤者之石|{"intelligence": 50}
+光明之石|tool|蕴含光明力量的石头|{"charm": 30}
+黑暗之石|tool|蕴含黑暗力量的石头|{"strength": 25}
+元素之心|tool|元素魔法核心|{"intelligence": 35}
+魔法源泉|tool|魔法的源泉|{"intelligence": 40, "energy": 30}
+生命之种|tool|生命的种子|{"health": 50}
+死亡之种|tool|死亡的种子|{"strength": -20}
+时间沙漏|tool|控制时间的沙漏|{"intelligence": 45}
+空间水晶|tool|空间魔法水晶|{"agility": 35}
+灵魂石|tool|蕴含灵魂的石头|{"intelligence": 30}
+天使之泪|tool|天使的眼泪|{"charm": 35, "health": 20}
+恶魔之血|tool|恶魔的血液|{"strength": 25, "charm": -10}
+凤凰之泪|tool|凤凰的眼泪|{"health": 40, "charm": 25}
+龙之心脏|tool|巨龙的心脏|{"strength": 40, "health": 30}
+独角兽之血|tool|独角兽的血液|{"charm": 40, "health": 30}
+幸福种子|tool|带来幸福的种子|{"affection": 30, "charm": 20}
+诅咒之书|tool|记载诅咒的书|{"intelligence": 25}
+祝福项链|tool|带有祝福的项链|{"charm": 25, "health": 15}
+守护手链|tool|守护之手链|{"health": 20}
+
+[杂物-消耗]
+绷带|misc|包扎伤口的绷带|{"health": 15}
+止血带|misc|止血用的带子|{"health": 10}
+急救包|tool|包含急救物品的包|{"health": 25}
+解毒剂|potion|解除中毒的药剂|{"health": 20}
+安全套|tool|避孕用品|{}
+创可贴|misc|处理小伤口的创可贴|{"health": 5}
+消毒酒精|misc|消毒用的酒精|{"health": 8}
+消炎药|misc|消炎用的药物|{"health": 15}
+退烧药|misc|退烧用的药物|{"health": 12}
+感冒药|misc|治疗感冒的药物|{"health": 10}
+止咳药|misc|止咳用的药物|{"health": 8}
+胃药|misc|治疗胃病的药物|{"health": 12}
+止痛药|misc|止痛用的药物|{"health": 10}
+安眠药|potion|让人昏睡的药物|{"energy": -10}
+迷药|potion|使人昏迷的药物|{"energy": -30}
+春药|potion|激发性欲的药物|{"sexArousal": 20}
+媚药|potion|增加好感的药物|{"affection": 15}
+合欢散|potion|催情的药物|{"sexArousal": 25}
+阴阳和合散|potion|促进结合的药物|{"sexArousal": 30}
+媚惑香|potion|魅惑的香料|{"charm": 15, "sexArousal": 10}
+催情香水|potion|催情的香水|{"sexArousal": 20, "charm": 10}
+西班牙苍蝇|potion|著名的催情剂|{"sexArousal": 25}
+壮阳药|potion|增强男性功能的药物|{"sexLibido": 20}
+缩阴石|tool|缩阴的魔法石|{"sexArousal": 15}
+丰乳霜|tool|增大胸部的乳霜|{"charm": 15}
+减肥药|potion|减肥用的药物|{"charm": 10, "energy": -5}
+增肥药|potion|增肥用的药物|{"energy": 15}
+美容药|potion|美容用的药物|{"charm": 20}
+美白药|potion|美白用的药物|{"charm": 18}
+防晒霜|misc|防晒用的霜|{"health": 5}
+润肤霜|misc|滋润皮肤的霜|{"charm": 5}
+洗面奶|misc|清洁面部的奶|{"health": 5}
+面膜|misc|护肤的面膜|{"charm": 8}
+护手霜|misc|保护手部的霜|{"charm": 5}
+洗发水|misc|洗头的液体|{"charm": 5}
+护发素|misc|保护头发的素|{"charm": 5}
+发蜡|misc|造型用的蜡|{"charm": 5}
+发胶|misc|定型用的胶|{"charm": 5}
+染发剂|misc|染发用的剂|{"charm": 8}
+烫发剂|misc|烫发用的剂|{"charm": 6}
+脱毛膏|misc|脱毛用的膏|{"charm": 5}
+指甲油|misc|涂指甲的油|{"charm": 8}
+卸甲水|misc|卸除指甲油的水|{}
+睫毛膏|misc|增长睫毛的膏|{"charm": 6}
+眼线笔|misc|画眼线的笔|{"charm": 5}
+腮红|misc|美化脸颊的红|{"charm": 8}
+口红|misc|美化嘴唇的口红|{"charm": 10}
+唇彩|misc|美化嘴唇的彩|{"charm": 8}
+粉底|misc|美化皮肤的底|{"charm": 8}
+遮瑕膏|misc|遮盖瑕疵的膏|{"charm": 5}
+定妆喷雾|misc|定妆用的喷雾|{"charm": 5}
+止汗剂|misc|止汗用的剂|{"charm": 5}
+体香剂|misc|增加体香的剂|{"charm": 10}
+
+[杂物-材料]
+魔法材料|misc|用于炼金的魔法材料|{"intelligence": 10}
+草药|misc|有疗效的草药|{"health": 10}
+毒草|misc|有毒的草药|{"health": -15}
+矿石|misc|珍贵的矿石|{"charm": 15}
+木材|tool|基础的木材|{}
+布料|misc|优质的布料|{}
+丝绸|misc|高档的丝绸|{"charm": 15}
+皮革|misc|坚固的皮革|{"strength": 5}
+金矿|misc|含金子的矿石|{"charm": 30}
+银矿|misc|含银子的矿石|{"charm": 25}
+铜矿|misc|含铜的矿石|{"charm": 10}
+铁矿|misc|含铁的矿石|{"strength": 8}
+锡矿|misc|含锡的矿石|{}
+铅矿|misc|含铅的矿石|{}
+汞矿|misc|液态水银矿|{"charm": 15}
+宝石矿|misc|含宝石的矿石|{"charm": 30}
+钻石原石|misc|未切割的钻石|{"charm": 40}
+红宝石原石|misc|未切割的红宝石|{"charm": 35}
+蓝宝石原石|misc|未切割的蓝宝石|{"charm": 35}
+翡翠原石|misc|未切割的翡翠|{"charm": 32}
+玛瑙原石|misc|未切割的玛瑙|{"charm": 25}
+水晶原石|misc|未切割的水晶|{"charm": 28}
+玉石|misc|优质的玉石|{"charm": 30}
+和田玉|misc|珍贵的和田玉|{"charm": 40}
+岫岩玉|misc|岫岩玉|{"charm": 28}
+蓝田玉|misc|蓝田玉|{"charm": 26}
+独山玉|misc|独山玉|{"charm": 25}
+松木|tool|松木木材|{}
+杉木|tool|杉木木材|{}
+楠木|tool|楠木木材|{"charm": 10}
+檀木|tool|檀木木材|{"charm": 15}
+桃木|tool|桃木木材|{"charm": 10}
+槐木|tool|槐木木材|{}
+榆木|tool|榆木木材|{}
+桦木|tool|桦木木材|{}
+橡木|tool|橡木木材|{}
+枫木|tool|枫木木材|{}
+竹子|tool|竹子材料|{}
+藤条|tool|藤条材料|{}
+亚麻|misc|亚麻布料|{}
+棉布|misc|棉布布料|{}
+麻布|misc|麻布布料|{}
+毛料|misc|毛料布料|{}
+纱布|misc|纱布材料|{}
+缎面|misc|缎面布料|{"charm": 10}
+绸缎|misc|绸缎布料|{"charm": 12}
+锦缎|misc|锦缎布料|{"charm": 15}
+纺绸|misc|纺绸布料|{"charm": 10}
+羊皮|misc|羊皮材料|{"charm": 8}
+牛皮|misc|牛皮材料|{"strength": 8}
+猪皮|misc|猪皮材料|{}
+马皮|misc|马皮材料|{"strength": 6}
+蛇皮|misc|蛇皮材料|{"charm": 10}
+鳄鱼皮|misc|鳄鱼皮材料|{"charm": 20}
+蜥蜴皮|misc|蜥蜴皮材料|{"charm": 15}
+鲸鱼皮|misc|鲸鱼皮材料|{"charm": 18}
+鱼鳞|misc|鱼鳞材料|{"charm": 8}
+羽毛|misc|鸟类羽毛|{"charm": 5}
+丝绸羽毛|misc|丝绸般的羽毛|{"charm": 12}
+魔法羽毛|misc|魔法羽毛|{"charm": 15, "intelligence": 10}
+龙皮|misc|龙的皮肤|{"strength": 25}
+凤凰羽|misc|凤凰的羽毛|{"charm": 30}
+独角兽毛|tool|独角兽的毛|{"charm": 25}
+精灵之发|tool|精灵的头发|{"charm": 20, "intelligence": 10}
+天使羽毛|tool|天使的羽毛|{"charm": 30, "intelligence": 15}
+恶魔之尾|tool|恶魔的尾巴|{"strength": 15, "charm": -5}
+麒麟毛|tool|麒麟的毛|{"strength": 20, "charm": 20}
+玻璃|misc|透明玻璃|{}
+水晶玻璃|misc|水晶玻璃|{"charm": 15}
+钢化玻璃|misc|钢化玻璃|{}
+有机玻璃|misc|有机玻璃|{}
+镜子|misc|普通的镜子|{"charm": 5}
+魔法镜|tool|有魔法的镜子|{"intelligence": 15}
+透视镜|tool|可以透视的镜子|{"intelligence": 20}
+魔镜|tool|神奇的魔镜|{"intelligence": 25}
+黏土|misc|普通黏土|{}
+陶土|misc|制作陶器的黏土|{}
+瓷土|misc|制作瓷器的黏土|{}
+耐火土|misc|耐火黏土|{}
+石膏|misc|石膏材料|{}
+水泥|misc|建筑用水泥|{}
+石灰|misc|建筑用石灰|{}
+沙子|misc|普通沙子|{}
+砾石|misc|小石头|{}
+鹅卵石|misc|圆润的鹅卵石|{"charm": 5}
+火山石|misc|火山喷出的石头|{"strength": 10}
+玄武岩|misc|黑色岩石|{}
+花岗岩|misc|花岗岩石|{}
+大理石|misc|大理石材|{"charm": 15}
+石英|misc|石英石|{"charm": 12}
+长石|misc|长石矿物|{}
+云母|misc|云母矿物|{}
+石棉|misc|石棉材料|{}
+萤石|misc|萤石矿物|{"charm": 10}
+滑石|misc|滑石矿物|{}
+
+[成人物品-服装]
+女仆装|adult|可爱的女仆装|{"charm": 20}
+性感内衣|adult|性感的内衣|{"charm": 25, "sexArousal": 10}
+泳装|adult|清凉的泳装|{"charm": 15, "sexArousal": 5}
+情趣内衣|adult|性感的情趣内衣|{"charm": 28, "sexArousal": 15}
+角色扮演服|adult|各种角色扮演服装|{"charm": 20, "sexArousal": 10}
+透明睡衣|adult|半透明的睡衣|{"charm": 25, "sexArousal": 12}
+校服|adult|学生制服|{"charm": 15, "sexArousal": 5}
+ol装|adult|职业ol装|{"charm": 18, "sexArousal": 8}
+兔女郎装|adult|兔女郎服装|{"charm": 25, "sexArousal": 15}
+护士装|adult|护士制服|{"charm": 22, "sexArousal": 12}
+警服|adult|警察制服|{"charm": 20, "sexArousal": 8}
+空姐装|adult|空姐制服|{"charm": 25, "sexArousal": 10}
+空少装|adult|空少制服|{"charm": 20, "sexArousal": 8}
+西装|adult|正式西装|{"charm": 18}
+晚礼服|adult|高贵的晚礼服|{"charm": 30, "sexArousal": 8}
+和服|adult|日本和服|{"charm": 28, "sexArousal": 10}
+韩服|adult|韩国传统服装|{"charm": 25, "sexArousal": 8}
+旗袍|adult|中国传统旗袍|{"charm": 30, "sexArousal": 12}
+汉服|adult|中国传统汉服|{"charm": 28, "sexArousal": 8}
+jk制服|adult|jk水手服|{"charm": 25, "sexArousal": 12}
+dk制服|adult|dk西装制服|{"charm": 20, "sexArousal": 8}
+女警装|adult|女警制服|{"charm": 25, "sexArousal": 12}
+护士裙|adult|护士裙装|{"charm": 24, "sexArousal": 12}
+水手服|adult|水手风格服装|{"charm": 20, "sexArousal": 8}
+海军装|adult|海军制服|{"charm": 22, "sexArousal": 8}
+军装|adult|军人制服|{"charm": 20, "sexArousal": 8}
+迷彩服|adult|迷彩作战服|{"charm": 15, "sexArousal": 5}
+紧身衣|adult|贴身的紧身服装|{"charm": 25, "sexArousal": 15}
+皮衣|adult|酷炫的皮衣|{"charm": 20, "sexArousal": 10}
+皮裙|adult|皮制短裙|{"charm": 22, "sexArousal": 12}
+皮裤|adult|皮制长裤|{"charm": 18, "sexArousal": 8}
+网袜|adult|网眼袜子|{"charm": 20, "sexArousal": 15}
+黑丝袜|adult|黑色丝袜|{"charm": 22, "sexArousal": 12}
+白丝袜|adult|白色丝袜|{"charm": 18, "sexArousal": 10}
+渔网袜|adult|渔网状袜子|{"charm": 20, "sexArousal": 15}
+吊带袜|adult|吊带丝袜|{"charm": 22, "sexArousal": 14}
+连裤袜|adult|连裤丝袜|{"charm": 18, "sexArousal": 10}
+比基尼|adult|三点式泳装|{"charm": 28, "sexArousal": 18}
+丁字裤|adult|丁字型内裤|{"charm": 20, "sexArousal": 15}
+情趣丁字裤|adult|情趣丁字裤|{"charm": 22, "sexArousal": 18}
+镂空内衣|adult|镂空设计的内衣|{"charm": 30, "sexArousal": 20}
+情趣睡裙|adult|性感睡裙|{"charm": 25, "sexArousal": 15}
+蕾丝睡衣|adult|蕾丝材质睡衣|{"charm": 24, "sexArousal": 14}
+吊带睡裙|adult|吊带式睡裙|{"charm": 22, "sexArousal": 12}
+真空睡袍|adult|真空穿的睡袍|{"charm": 28, "sexArousal": 18}
+湿身装|adult|湿身效果服装|{"charm": 30, "sexArousal": 20}
+半透明衬衫|adult|半透明衬衫|{"charm": 25, "sexArousal": 15}
+露脐装|adult|露出腹部的服装|{"charm": 22, "sexArousal": 12}
+露背装|adult|露出背部的服装|{"charm": 25, "sexArousal": 14}
+超短裤|adult|极短的短裤|{"charm": 20, "sexArousal": 12}
+超短裙|adult|极短的裙子|{"charm": 22, "sexArousal": 14}
+低胸装|adult|低胸露乳沟的服装|{"charm": 30, "sexArousal": 18}
+深v领|adult|深v领服装|{"charm": 28, "sexArousal": 16}
+抹胸|adult|抹胸式服装|{"charm": 24, "sexArousal": 14}
+肚兜|adult|传统肚兜|{"charm": 22, "sexArousal": 12}
+亵衣|adult|古代内衣|{"charm": 20, "sexArousal": 10}
+亵裤|adult|古代内裤|{"charm": 18, "sexArousal": 10}
+汉服内衣|adult|汉服风格内衣|{"charm": 22, "sexArousal": 12}
+lo裙|adult|洛丽塔风格裙装|{"charm": 28, "sexArousal": 10}
+洋装|adult|西方洋装|{"charm": 25, "sexArousal": 10}
+蓬蓬裙|adult|蓬松的公主裙|{"charm": 25, "sexArousal": 8}
+公主服|adult|公主风格服装|{"charm": 28, "sexArousal": 10}
+王子服|adult|王子风格服装|{"charm": 25, "sexArousal": 8}
+骑士服|adult|骑士风格服装|{"charm": 22, "sexArousal": 8}
+cosplay服|adult|角色扮演服装|{"charm": 20, "sexArousal": 10}
+
+[成人物品-道具]
+按摩油|adult|用于按摩的精油|{"sexArousal": 15}
+催情香水|adult|带有催情效果的香水|{"sexArousal": 20, "charm": 10}
+跳蛋|adult|成人用品|{"sexArousal": 20}
+按摩棒|adult|成人用品|{"sexArousal": 25}
+贞操带|adult|限制性行为的道具|{"sexSensitivity": -10}
+乳夹|adult|成人用品|{"sexArousal": 15}
+眼罩|adult|遮蔽视线用的眼罩|{"sexArousal": 5}
+手铐|adult|成人用品|{"sexArousal": 10}
+绳子|adult|捆绑用的绳子|{"sexArousal": 8}
+口球|adult|成人用品|{"sexArousal": 12}
+肛塞|adult|成人用品|{"sexArousal": 18}
+震动棒|adult|成人用品|{"sexArousal": 22}
+飞机杯|adult|成人用品|{"sexArousal": 18}
+假阳具|adult|成人用品|{"sexArousal": 20}
+润滑剂|adult|润滑用品|{"sexArousal": 5}
+催情剂|adult|激发欲望的药物|{"sexArousal": 30, "sexLibido": 25}
+媚药糖果|adult|甜美的媚药糖果|{"sexArousal": 20, "charm": 10}
+发情药剂|adult|让动物发情的药剂|{"sexArousal": 25}
+电动按摩棒|adult|电动按摩棒|{"sexArousal": 28}
+穿戴式按摩器|adult|穿戴式按摩器|{"sexArousal": 25}
+前列腺按摩器|adult|男性按摩器|{"sexArousal": 22}
+G点按摩棒|adult|女性按摩器|{"sexArousal": 30}
+吸吮式按摩器|adult|吸吮式按摩器|{"sexArousal": 28}
+温热按摩棒|adult|温热按摩棒|{"sexArousal": 26}
+防水按摩器|adult|防水按摩器|{"sexArousal": 24}
+远程控制按摩器|adult|远程控制按摩器|{"sexArousal": 28}
+智能按摩器|adult|智能按摩器|{"sexArousal": 30}
+肛珠|adult|肛塞类玩具|{"sexArousal": 20}
+后庭拉珠|adult|后庭拉珠|{"sexArousal": 22}
+前列腺珠子|adult|前列腺刺激珠子|{"sexArousal": 24}
+肛门清洁器|adult|肛门清洁工具|{"sexArousal": 10}
+阴道球|adult|阴道球|{"sexArousal": 18}
+阴道按摩器|adult|阴道按摩器|{"sexArousal": 22}
+缩阴球|adult|缩阴训练球|{"sexArousal": 15}
+仿真阳具|adult|仿真阳具|{"sexArousal": 22}
+双头龙|adult|双头按摩器|{"sexArousal": 25}
+转珠按摩器|adult|转珠按摩器|{"sexArousal": 24}
+变频按摩器|adult|变频按摩器|{"sexArousal": 26}
+静音按摩器|adult|静音按摩器|{"sexArousal": 22}
+透明按摩器|adult|透明按摩器|{"sexArousal": 20}
+夜光按摩器|adult|夜光按摩器|{"sexArousal": 22}
+USB充电按摩器|adult|USB充电按摩器|{"sexArousal": 24}
+防水跳蛋|adult|防水跳蛋|{"sexArousal": 22}
+远程跳蛋|adult|远程控制跳蛋|{"sexArousal": 25}
+穿戴跳蛋|adult|穿戴式跳蛋|{"sexArousal": 24}
+静音跳蛋|adult|静音跳蛋|{"sexArousal": 20}
+无线跳蛋|adult|无线跳蛋|{"sexArousal": 23}
+振动Ring|adult|振动环|{"sexArousal": 24}
+持久环|adult|持久环|{"sexArousal": 18}
+带刺Ring|adult|带刺环|{"sexArousal": 26}
+真空助勃器|adult|助勃器|{"sexArousal": 20}
+增大器|adult|增大器|{"sexArousal": 18}
+延时喷剂|adult|延时喷剂|{"sexArousal": 15}
+延时湿巾|adult|延时湿巾|{"sexArousal": 12}
+催情喷雾|adult|催情喷雾|{"sexArousal": 25}
+润滑喷雾|adult|润滑喷雾|{"sexArousal": 10}
+高潮香水|adult|高潮香水|{"sexArousal": 28}
+费洛蒙香水|adult|费洛蒙香水|{"sexArousal": 22}
+勾魂香水|adult|勾魂香水|{"sexArousal": 26}
+魅惑香水|adult|魅惑香水|{"sexArousal": 24}
+催情蜡烛|adult|催情蜡烛|{"sexArousal": 18}
+按摩蜡烛|adult|按摩蜡烛|{"sexArousal": 15}
+温热蜡烛|adult|温热蜡烛|{"sexArousal": 16}
+低温蜡烛|adult|低温蜡烛|{"sexArousal": 14}
+乳霜|adult|身体乳霜|{"sexArousal": 12}
+按摩乳|adult|按摩乳|{"sexArousal": 14}
+催情乳|adult|催情乳|{"sexArousal": 20}
+润滑乳|adult|润滑乳|{"sexArousal": 10}
+护肤乳|adult|护肤乳|{"charm": 8}
+美白乳|adult|美白乳|{"charm": 10}
+美体乳|adult|美体乳|{"charm": 12}
+丰乳乳霜|adult|丰乳乳霜|{"charm": 15}
+瘦腿霜|adult|瘦腿霜|{"charm": 10}
+提臀霜|adult|提臀霜|{"charm": 12}
+脱毛膏|adult|脱毛膏|{"charm": 8}
+私处护理液|adult|私处护理液|{"sexArousal": 8}
+私处香水|adult|私处香水|{"sexArousal": 18}
+私处美白|adult|私处美白|{"charm": 10}
+私处紧致|adult|私处紧致|{"sexArousal": 10}
+高潮液|adult|高潮液|{"sexArousal": 22}
+爱液|adult|润滑液体|{"sexArousal": 15}
+催情酒|adult|催情酒|{"sexArousal": 20}
+催情巧克力|adult|催情巧克力|{"sexArousal": 18}
+催情糖果|adult|催情糖果|{"sexArousal": 15}
+催情咖啡|adult|催情咖啡|{"sexArousal": 16}
+催情奶茶|adult|催情奶茶|{"sexArousal": 15}
+催情饮料|adult|催情饮料|{"sexArousal": 14}
+催情果冻|adult|催情果冻|{"sexArousal": 17}
+催情蛋糕|adult|催情蛋糕|{"sexArousal": 16}
+催情饼干|adult|催情饼干|{"sexArousal": 14}
+催情奶茶|adult|催情奶茶|{"sexArousal": 15}
+伟哥|adult|增强性功能|{"sexLibido": 30}
+犀利士|adult|增强性功能|{"sexLibido": 28}
+伟姐|adult|女性伟哥|{"sexLibido": 28}
+性欲增强剂|adult|性欲增强剂|{"sexLibido": 30}
+春情药|adult|春情药|{"sexArousal": 25}
+合欢药|adult|合欢药|{"sexArousal": 28}
+逍遥散|adult|逍遥散|{"sexArousal": 26}
+销魂散|adult|销魂散|{"sexArousal": 30}
+迷魂香|adult|迷魂香|{"sexArousal": 20}
+摄魂香|adult|摄魂香|{"sexArousal": 22}
+勾魂香|adult|勾魂香|{"sexArousal": 24}
+迷情香|adult|迷情香|{"sexArousal": 26}
+销魂香|adult|销魂香|{"sexArousal": 28}
+春宫图|adult|春宫图|{"sexArousal": 15}
+春宫书|adult|春宫书|{"sexArousal": 15}
+情趣骰子|adult|情趣骰子|{"sexArousal": 12}
+情趣扑克|adult|情趣扑克|{"sexArousal": 10}
+情趣轮盘|adult|情趣轮盘|{"sexArousal": 14}
+情趣转盘|adult|情趣转盘|{"sexArousal": 12}
+惩罚卡片|adult|惩罚卡片|{"sexArousal": 10}
+任务卡片|adult|任务卡片|{"sexArousal": 12}
+真心话卡片|adult|真心话卡片|{"sexArousal": 8}
+大冒险卡片|adult|大冒险卡片|{"sexArousal": 10}
+脱衣扑克|adult|脱衣扑克|{"sexArousal": 18}
+脱衣骰子|adult|脱衣骰子|{"sexArousal": 16}
+情趣棋|adult|情趣棋|{"sexArousal": 12}
+情趣游戏|adult|情趣游戏|{"sexArousal": 14}
+SM套装|adult|SM套装|{"sexArousal": 20}
+女仆围裙|adult|女仆围裙|{"charm": 18}
+兔耳发箍|adult|兔耳发箍|{"charm": 15, "sexArousal": 8}
+尾巴肛塞|adult|尾巴造型肛塞|{"sexArousal": 20}
+尾巴装饰|adult|尾巴装饰|{"sexArousal": 12}
+猫尾|adult|猫尾巴|{"sexArousal": 15}
+狐狸尾巴|adult|狐狸尾巴|{"sexArousal": 14}
+狼尾巴|adult|狼尾巴|{"sexArousal": 12}
+恶魔尾巴|adult|恶魔尾巴|{"sexArousal": 16}
+天使翅膀|adult|天使翅膀|{"charm": 20, "sexArousal": 8}
+恶魔翅膀|adult|恶魔翅膀|{"charm": 15, "sexArousal": 10}
+精灵耳朵|adult|精灵耳朵|{"charm": 18, "sexArousal": 8}
+兽耳|adult|兽耳装饰|{"charm": 15, "sexArousal": 10}
+面具|adult|面具|{"charm": 10}
+眼罩|adult|眼罩|{"sexArousal": 8}
+项圈|adult|项圈|{"charm": 12}
+牵引绳|adult|牵引绳|{"sexArousal": 15}
+狗链|adult|狗链|{"sexArousal": 12}
+乳环|adult|乳环|{"sexArousal": 18}
+脐环|adult|脐环|{"sexArousal": 14}
+舌钉|adult|舌钉|{"sexArousal": 12}
+唇钉|adult|唇钉|{"sexArousal": 10}
+眉钉|adult|眉钉|{"sexArousal": 8}
+耳钉|adult|耳钉|{"charm": 5}
+鼻环|adult|鼻环|{"sexArousal": 10}
+私处穿环|adult|私处穿环|{"sexArousal": 20}
+贞操锁|adult|贞操锁|{"sexSensitivity": -15}
+贞操带|adult|贞操带|{"sexSensitivity": -10}
+电动贞操带|adult|电动贞操带|{"sexSensitivity": -5, "sexArousal": 10}
+锁精环|adult|锁精环|{"sexArousal": 15}
+锁阴环|adult|锁阴环|{"sexArousal": 15}
+龟头环|adult|龟头环|{"sexArousal": 14}
+阴茎环|adult|阴茎环|{"sexArousal": 12}
+乳头环|adult|乳头环|{"sexArousal": 16}
+尿道棒|adult|尿道棒|{"sexArousal": 18}
+尿道塞|adult|尿道塞|{"sexArousal": 16}
+跳蛋腰带|adult|跳蛋腰带|{"sexArousal": 22}
+穿戴式假阳具|adult|穿戴式假阳具|{"sexArousal": 24}
+女用假阳具|adult|女用假阳具|{"sexArousal": 20}
+男用飞机杯|adult|男用飞机杯|{"sexArousal": 20}
+名器|adult|名器|{"sexArousal": 25}
+实体娃娃|adult|实体娃娃|{"sexArousal": 25}
+充气娃娃|adult|充气娃娃|{"sexArousal": 18}
+硅胶娃娃|adult|硅胶娃娃|{"sexArousal": 22}
+实体倒模|adult|实体倒模|{"sexArousal": 20}
+飞机杯加热器|adult|飞机杯加热器|{"sexArousal": 15}
+飞机杯加热棒|adult|飞机杯加热棒|{"sexArousal": 14}
+飞机杯支架|adult|飞机杯支架|{"sexArousal": 10}
+飞机杯清洁剂|adult|飞机杯清洁剂|{}
+润滑剂加热器|adult|润滑剂加热器|{"sexArousal": 12}
+情趣加热垫|adult|情趣加热垫|{"sexArousal": 14}
+温控按摩器|adult|温控按摩器|{"sexArousal": 18}
+冰感按摩器|adult|冰感按摩器|{"sexArousal": 16}
+冷热交替按摩器|adult|冷热交替按摩器|{"sexArousal": 20}
+吸力按摩器|adult|吸力按摩器|{"sexArousal": 22}
+水流按摩器|adult|水流按摩器|{"sexArousal": 18}
+气泡按摩器|adult|气泡按摩器|{"sexArousal": 16}
+脉动按摩器|adult|脉动按摩器|{"sexArousal": 20}
+共振按摩器|adult|共振按摩器|{"sexArousal": 18}
+螺旋按摩器|adult|螺旋按摩器|{"sexArousal": 20}
+狼牙按摩器|adult|狼牙按摩器|{"sexArousal": 24}
+颗粒按摩器|adult|颗粒按摩器|{"sexArousal": 22}
+螺纹按摩器|adult|螺纹按摩器|{"sexArousal": 20}
+凸点按摩器|adult|凸点按摩器|{"sexArousal": 18}
+波纹按摩器|adult|波纹按摩器|{"sexArousal": 16}
+缠绕式按摩器|adult|缠绕式按摩器|{"sexArousal": 20}
+自动伸缩按摩器|adult|自动伸缩按摩器|{"sexArousal": 24}
+自动旋转按摩器|adult|自动旋转按摩器|{"sexArousal": 25}
+自动震动按摩器|adult|自动震动按摩器|{"sexArousal": 22}
+变频智能按摩器|adult|变频智能按摩器|{"sexArousal": 26}
+蓝牙智能按摩器|adult|蓝牙智能按摩器|{"sexArousal": 24}
+APP控制按摩器|adult|APP控制按摩器|{"sexArousal": 28}
+远程遥控按摩器|adult|远程遥控按摩器|{"sexArousal": 26}
+语音控制按摩器|adult|语音控制按摩器|{"sexArousal": 25}
+重力感应按摩器|adult|重力感应按摩器|{"sexArousal": 24}
+心跳感应按摩器|adult|心跳感应按摩器|{"sexArousal": 26}
+光感按摩器|adult|光感按摩器|{"sexArousal": 22}
+声感按摩器|adult|声感按摩器|{"sexArousal": 20}
+触感按摩器|adult|触感按摩器|{"sexArousal": 24}
+VR成人玩具|adult|VR成人玩具|{"sexArousal": 30}
+AR成人玩具|adult|AR成人玩具|{"sexArousal": 28}
+智能成人玩具|adult|智能成人玩具|{"sexArousal": 30}
+AI成人玩具|adult|AI成人玩具|{"sexArousal": 32}
+成人VR头盔|adult|成人VR头盔|{"sexArousal": 30}
+成人AR眼镜|adult|成人AR眼镜|{"sexArousal": 28}
+虚拟现实成人设备|adult|虚拟现实成人设备|{"sexArousal": 32}
+情趣内衣清洗剂|adult|情趣内衣清洗剂|{}
+成人玩具清洁剂|adult|成人玩具清洁剂|{}
+情趣玩具收纳盒|adult|情趣玩具收纳盒|{}
+情趣玩具干燥架|adult|情趣玩具干燥架|{}
+情趣玩具消毒器|adult|情趣玩具消毒器|{}
+情趣玩具储物袋|adult|情趣玩具储物袋|{}
+情趣包装盒|adult|情趣包装盒|{}
+礼品袋|adult|礼品袋|{}
+贺卡|adult|贺卡|{"affection": 5}
+

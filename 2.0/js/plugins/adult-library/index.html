@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>色色库 - AI故事</title>
+    <link rel="stylesheet" href="../../../css/main.css">
+    <style>
+        .adult-library {
+            padding: 20px;
+        }
+        
+        .adult-library h2 {
+            color: #ff69b4;
+            margin-bottom: 20px;
+        }
+        
+        .adult-library p {
+            margin-bottom: 30px;
+            color: #666;
+        }
+        
+        .plugin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .plugin-card {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .plugin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .plugin-card h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .plugin-card p {
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .plugin-card button {
+            background: #ff69b4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .plugin-card button:hover {
+            background: #ff1493;
+        }
+        
+        .status-panel {
+            background: #f0f0f0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .status-panel h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        
+        .status-label {
+            color: #666;
+        }
+        
+        .status-value {
+            font-weight: bold;
+            color: #ff69b4;
+        }
+        
+        .content-list {
+            max-height: 200px;
+            overflow-y: auto;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        
+        .content-item {
+            padding: 5px 10px;
+            margin: 5px 0;
+            background: #f5f5f5;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .btn-group button {
+            flex: 1;
+            padding: 8px 15px;
+            font-size: 12px;
+        }
+        
+        .btn-secondary {
+            background: #6c757d !important;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268 !important;
+        }
+        
+        .trigger-mode {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .trigger-mode button {
+            flex: 1;
+            padding: 10px;
+            background: #e9ecef;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .trigger-mode button.active {
+            border-color: #ff69b4;
+            background: #fff0f5;
+        }
+        
+        .trigger-mode button:hover {
+            background: #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="sidebar">
+            <h1>✨ AI故事</h1>
+            <nav>
+                <button class="nav-btn" onclick="window.location.href='../../../index.html?page=plugins'">⬅️ 返回</button>
+                <button class="nav-btn" onclick="window.location.href='../../../index.html'">🏠 首页</button>
+                <button class="nav-btn" onclick="window.location.href='../../../index.html?page=worlds'">🌍 世界</button>
+                <button class="nav-btn" onclick="window.location.href='../../../index.html?page=characters'">👤 角色</button>
+                <button class="nav-btn" onclick="window.location.href='../character-editor/index.html'">🧩 角色插件</button>
+                <button class="nav-btn" onclick="window.location.href='../../../index.html?page=story'">📖 故事</button>
+                <button class="nav-btn" onclick="window.location.href='../../../index.html?page=settings'">⚙️ 设置</button>
+                <button class="nav-btn" onclick="window.location.href='../../../index.html?page=plugins'">🔌 插件</button>
+            </nav>
+        </div>
+        
+        <div class="main" id="mainContent">
+            <div class="adult-library">
+                <h2>🎀 色色库</h2>
+                <p>欢迎来到色色库！这里管理所有亲密互动内容，支持用户自定义扩展。</p>
+                
+                <div class="status-panel">
+                    <h3>📊 系统状态</h3>
+                    <div class="status-item">
+                        <span class="status-label">触发模式:</span>
+                        <span class="status-value" id="triggerMode">加载中...</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">已加载插件:</span>
+                        <span class="status-value" id="pluginCount">0</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">历史记录:</span>
+                        <span class="status-value" id="historyCount">0</span>
+                    </div>
+                </div>
+                
+                <div class="trigger-mode">
+                    <button onclick="setTriggerMode('auto')" id="btn-auto">🤖 自动</button>
+                    <button onclick="setTriggerMode('user')" id="btn-user">👤 用户</button>
+                    <button onclick="setTriggerMode('rule')" id="btn-rule">📋 规则</button>
+                    <button onclick="setTriggerMode('mixed')" id="btn-mixed" class="active">🔄 混合</button>
+                </div>
+
+                <div class="status-panel" style="margin-top: 20px;">
+                    <h3>⚙️ 自动触发配置</h3>
+                    <div class="status-item">
+                        <span class="status-label">启用自动触发:</span>
+                        <label style="display: inline-flex; align-items: center;">
+                            <input type="checkbox" id="autoEnabled" onchange="updateAutoConfig()" style="width: auto; margin-left: 10px;">
+                        </label>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">最低好感度:</span>
+                        <input type="number" id="minAffection" value="30" min="0" max="100" onchange="updateAutoConfig()" style="width: 80px; margin-left: 10px;">
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">最低兴奋度:</span>
+                        <input type="number" id="minArousal" value="20" min="0" max="100" onchange="updateAutoConfig()" style="width: 80px; margin-left: 10px;">
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">触发概率 (%):</span>
+                        <input type="number" id="triggerProb" value="30" min="0" max="100" onchange="updateAutoConfig()" style="width: 80px; margin-left: 10px;">
+                    </div>
+                </div>
+
+                <div style="margin: 20px 0;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <button onclick="userRequestTrigger()" style="background: linear-gradient(135deg, #ff69b4, #ff1493); color: white; border: none; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem;">
+                            💕 请求触发
+                        </button>
+                        <button onclick="testTrigger()" style="background: #6c757d; color: white; border: none; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem;">
+                            🎮 测试触发
+                        </button>
+                        <button onclick="generateScene()" style="background: #17a2b8; color: white; border: none; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem;">
+                            🎲 生成场景
+                        </button>
+                        <button onclick="editContent()" style="background: #28a745; color: white; border: none; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem;">
+                            📝 编辑内容
+                        </button>
+                        <button onclick="addRule()" style="background: #ffc107; color: #333; border: none; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem;">
+                            ➕ 添加规则
+                        </button>
+                        <button onclick="viewHistory()" style="background: #6610f2; color: white; border: none; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem;">
+                            📋 查看历史
+                        </button>
+                        <button onclick="viewStats()" style="background: #e83e8c; color: white; border: none; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem;">
+                            📊 使用统计
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="resultArea" style="margin-top: 20px; display: none;">
+                    <div class="status-panel">
+                        <h3>📄 结果</h3>
+                        <pre id="resultContent" style="white-space: pre-wrap; background: #fff; padding: 10px; border-radius: 4px; max-height: 300px; overflow-y: auto;"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="right">
+            <div id="rightPanel"></div>
+        </div>
+    </div>
+
+    <div class="mobile-nav" id="mobileNav"></div>
+
+    <script src="../../plugin.js"></script>
+    <script src="../../view.js"></script>
+    <script src="../../ai.js"></script>
+    <script src="../../data.js"></script>
+    <script src="../../settings.js"></script>
+    <script src="../../story.js"></script>
+    <script src="hentai-plugin-hub.js"></script>
+    <script src="hentai-user-content.js"></script>
+    <script src="hentai-integration.js"></script>
+    <script>
+        const mobileNavItems = [
+            { page: 'plugins', icon: '🔌', label: '插件', url: '../../../index.html?page=plugins' },
+            { page: 'home', icon: '🏠', label: '首页', url: '../../../index.html' },
+            { page: 'character-editor', icon: '🧩', label: '角色', url: '../character-editor/index.html' },
+            { page: 'inventory', icon: '🎒', label: '物品', url: '../inventory/index.html' },
+            { page: 'adult-library', icon: '🎀', label: '色色库', url: '' },
+            { page: 'settings', icon: '⚙️', label: '设置', url: '../../../index.html?page=settings' }
+        ];
+        
+        function setupMobileNav() {
+            const mobileNav = document.getElementById('mobileNav');
+            if (!mobileNav) return;
+            
+            mobileNav.innerHTML = mobileNavItems.map(item => `
+                <button class="mobile-nav-btn ${item.url === '' ? 'active' : ''}" data-url="${item.url}">
+                    <span class="icon">${item.icon}</span>
+                    <span class="label">${item.label}</span>
+                </button>
+            `).join('');
+            
+            mobileNav.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const url = btn.dataset.url;
+                    if (url) {
+                        window.location.href = url;
+                    }
+                });
+            });
+        }
+        
+        let hentaiSystem = null;
+        
+        async function initHentai() {
+            setupMobileNav();
+            console.log('Initializing Hentai System...');
+            
+            try {
+                hentaiSystem = HentaiIntegration;
+                await hentaiSystem.init();
+                updateStatus();
+                console.log('Hentai System Ready!');
+            } catch (e) {
+                console.error('Failed to initialize:', e);
+                document.getElementById('triggerMode').textContent = '未初始化';
+            }
+        }
+        
+        function updateStatus() {
+            if (!hentaiSystem) return;
+            
+            const status = hentaiSystem.getSystemStatus();
+            document.getElementById('triggerMode').textContent = status.triggerMode || '未知';
+            document.getElementById('pluginCount').textContent = status.pluginsLoaded || 0;
+            document.getElementById('historyCount').textContent = status.historyLength || 0;
+            
+            if (status.autoTrigger) {
+                const autoConfig = status.autoTrigger;
+                document.getElementById('autoEnabled').checked = autoConfig.enabled !== false;
+                document.getElementById('minAffection').value = autoConfig.minAffection || 30;
+                document.getElementById('minArousal').value = autoConfig.minArousal || 20;
+                document.getElementById('triggerProb').value = Math.round((autoConfig.probability || 0.3) * 100);
+            }
+            
+            document.querySelectorAll('.trigger-mode button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('btn-' + (status.triggerMode || 'mixed')).classList.add('active');
+        }
+
+        function updateAutoConfig() {
+            const config = {
+                enabled: document.getElementById('autoEnabled').checked,
+                minAffection: parseInt(document.getElementById('minAffection').value) || 30,
+                minArousal: parseInt(document.getElementById('minArousal').value) || 20,
+                probability: parseInt(document.getElementById('triggerProb').value) / 100 || 0.3
+            };
+            
+            if (window.HentaiPluginHub && window.HentaiPluginHub.config) {
+                window.HentaiPluginHub.config.autoTrigger = config;
+                window.HentaiPluginHub.saveConfig();
+                showResult('✅ 自动触发配置已更新!\n\n' + 
+                    '启用: ' + (config.enabled ? '是' : '否') + '\n' +
+                    '最低好感度: ' + config.minAffection + '\n' +
+                    '最低兴奋度: ' + config.minArousal + '\n' +
+                    '触发概率: ' + (config.probability * 100) + '%');
+            } else {
+                showResult('❌ 保存失败: 插件未初始化');
+            }
+        }
+
+        async function userRequestTrigger() {
+            if (!hentaiSystem) return;
+            
+            const context = {
+                affection: parseInt(document.getElementById('minAffection').value) || 30,
+                arousal: parseInt(document.getElementById('minArousal').value) || 20,
+                location: 'bedroom',
+                time: new Date().getHours(),
+                userRequested: true
+            };
+            
+            const result = await hentaiSystem.trigger(context);
+            
+            if (result.triggered) {
+                showResult(`💕 触发成功!\n\n触发类型: ${result.type}\n\n场景元素:\n${JSON.stringify(result.scene, null, 2)}\n\n生成提示:\n${result.prompt}`);
+            } else {
+                showResult('😢 触发失败\n\n当前条件不足，请尝试:\n- 提高亲密度/欲望值\n- 切换到其他触发模式\n- 调整自动触发配置');
+            }
+        }
+        
+        function setTriggerMode(mode) {
+            if (!hentaiSystem) return;
+            hentaiSystem.setTriggerMode(mode);
+            updateStatus();
+            showResult('触发模式已设置为: ' + mode);
+        }
+        
+        async function testTrigger() {
+            if (!hentaiSystem) return;
+            
+            const context = {
+                affection: 50,
+                arousal: 40,
+                location: 'bedroom',
+                time: 'night'
+            };
+            
+            const result = await hentaiSystem.trigger(context);
+            
+            if (result.triggered) {
+                showResult(`触发类型: ${result.type}\n\n场景元素:\n${JSON.stringify(result.scene, null, 2)}\n\n生成提示:\n${result.prompt}`);
+            } else {
+                showResult('当前条件下未触发亲密互动\n\n可能原因:\n- 亲密度/欲望值不足\n- 概率随机未命中\n- 触发模式设置问题');
+            }
+        }
+        
+        async function generateScene() {
+            if (!hentaiSystem) return;
+            
+            const context = {
+                affection: 60,
+                arousal: 50
+            };
+            
+            const result = await hentaiSystem.generateScene(context);
+            showResult(`场景元素:\n${JSON.stringify(result.scene, null, 2)}\n\n生成提示:\n${result.prompt}`);
+        }
+        
+        function editContent() {
+            showResult(`📝 用户内容编辑
+
+内容文件位置: js/plugins/adult-library/user-content/
+
+文件说明:
+- poses.txt     - 姿势
+- actions.txt   - 动作
+- body.txt      - 身体部位
+- dialogue.txt  - 对话
+- locations.txt - 地点
+- roles.txt     - 角色
+- style.txt     - 风格
+- toys.txt      - 道具
+
+格式: 名称|描述|标签
+
+重启后自动加载`);
+        }
+        
+        function addRule() {
+            const rule = {
+                name: '示例规则',
+                conditions: {
+                    location: ['bedroom'],
+                    minAffection: 30
+                },
+                actions: {
+                    poses: 'random',
+                    dialogue: 'random'
+                }
+            };
+            
+            if (hentaiSystem) {
+                hentaiSystem.addRule(rule);
+                showResult('✅ 规则添加成功!\n\n' + JSON.stringify(rule, null, 2));
+            }
+        }
+        
+        function viewHistory() {
+            if (!hentaiSystem) return;
+            
+            const history = hentaiSystem.getHistory();
+            if (history.length === 0) {
+                showResult('暂无历史记录');
+                return;
+            }
+            
+            const formatted = history.slice(-10).map((item, i) => {
+                return `${i + 1}. ${new Date(item.timestamp).toLocaleString()}\n   元素: ${JSON.stringify(item.elements)}`;
+            }).join('\n\n');
+            
+            showResult('📋 最近历史记录:\n\n' + formatted);
+        }
+        
+        function viewStats() {
+            if (!hentaiSystem) return;
+            
+            const stats = hentaiSystem.getStats();
+            const formatted = Object.entries(stats).map(([name, data]) => {
+                return `${name}:\n  使用次数: ${data.useCount || 0}\n  最后使用: ${data.lastUsed ? new Date(data.lastUsed).toLocaleString() : '从未'}`;
+            }).join('\n\n');
+            
+            showResult('📊 插件使用统计:\n\n' + formatted);
+        }
+        
+        function showResult(text) {
+            document.getElementById('resultArea').style.display = 'block';
+            document.getElementById('resultContent').textContent = text;
+        }
+        
+        window.addEventListener('DOMContentLoaded', initHentai);
+    </script>
+</body>
+</html>

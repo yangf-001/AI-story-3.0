@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>角色插件 - AI故事</title>
+    <link rel="stylesheet" href="../../../css/main.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <div id="navContainer"></div>
+        
+        <div class="main" id="mainContent"></div>
+        
+        <div class="right">
+            <div id="rightPanel"></div>
+        </div>
+    </div>
+    
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">标题</h3>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+    
+    <div class="modal" id="presetModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="presetModalTitle">选择预设</h3>
+                <button class="modal-close" onclick="document.getElementById('presetModal').classList.remove('active')">×</button>
+            </div>
+            <div id="presetModalBody"></div>
+        </div>
+    </div>
+
+    <div class="mobile-nav" id="mobileNav"></div>
+
+    <script src="../../plugin.js"></script>
+    <script src="../../view.js"></script>
+    <script src="../common/nav.js"></script>
+    <script src="../common/feedback.js"></script>
+    
+    <script src="index.js"></script>
+    
+    <script src="../../ai.js"></script>
+    <script src="../../data.js"></script>
+    <script src="../../settings.js"></script>
+    <script src="../../story.js"></script>
+    <script>
+        const CharacterPresets = {
+            role: null,
+            personality: null,
+            hobby: null,
+            favorite: null,
+            dislike: null,
+            appearance: null,
+            sensitive: null,
+            fetish: null,
+            limits: null,
+            gender: null,
+            age: null,
+            race: null,
+            occupation: null,
+            height: null,
+            background: null,
+            
+            async load() {
+                const basePath = 'user-content/';
+                this.role = await this.loadFile(basePath + 'role.txt');
+                this.personality = await this.loadFile(basePath + 'personality.txt');
+                this.hobby = await this.loadFile(basePath + 'hobby.txt');
+                this.favorite = await this.loadFile(basePath + 'favorite.txt');
+                this.dislike = await this.loadFile(basePath + 'dislike.txt');
+                this.appearance = await this.loadFile(basePath + 'appearance.txt');
+                this.sensitive = await this.loadFile(basePath + 'sensitive.txt');
+                this.fetish = await this.loadFile(basePath + 'fetish.txt');
+                this.limits = await this.loadFile(basePath + 'limits.txt');
+                this.gender = await this.loadFile(basePath + 'gender.txt');
+                this.age = await this.loadFile(basePath + 'age.txt');
+                this.race = await this.loadFile(basePath + 'race.txt');
+                this.occupation = await this.loadFile(basePath + 'occupation.txt');
+                this.height = await this.loadFile(basePath + 'height.txt');
+                this.background = await this.loadFile(basePath + 'background.txt');
+            },
+            
+            async loadFile(path) {
+                try {
+                    const response = await fetch(path);
+                    const text = await response.text();
+                    return this.parse(text);
+                } catch (e) {
+                    console.warn('Failed to load preset:', path, e);
+                    return {};
+                }
+            },
+            
+            parse(text) {
+                const result = {};
+                let currentCategory = '默认';
+                const lines = text.split('\n');
+                
+                for (let line of lines) {
+                    line = line.trim();
+                    if (!line || line.startsWith('#')) continue;
+                    
+                    if (line.startsWith('[') && line.endsWith(']')) {
+                        currentCategory = line.slice(1, -1);
+                        if (!result[currentCategory]) result[currentCategory] = [];
+                    } else if (line.includes('|')) {
+                        const [name, desc] = line.split('|');
+                        if (!result[currentCategory]) result[currentCategory] = [];
+                        result[currentCategory].push({ name: name.trim(), desc: desc?.trim() || '' });
+                    }
+                }
+                return result;
+            },
+            
+            generateSelectHtml(presetData, fieldId, label) {
+                if (!presetData || Object.keys(presetData).length === 0) {
+                    return '';
+                }
+                
+                let html = `<div class="form-group"><label>${label}（可选）</label><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">`;
+                html += `<button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker('${fieldId}')" style="font-size:0.8rem;padding:4px 8px;">📋 选择预设</button>`;
+                html += `<input type="text" id="${fieldId}" placeholder="自定义${label}"></div></div>`;
+                return html;
+            },
+            
+            showPresetPicker(fieldId, isMulti = false) {
+                let presetData;
+                switch(fieldId) {
+                    case 'charRole': presetData = this.role; break;
+                    case 'charPersonality': presetData = this.personality; break;
+                    case 'charHobby': presetData = this.hobby; break;
+                    case 'charFavorite': presetData = this.favorite; break;
+                    case 'charDislike': presetData = this.dislike; break;
+                    case 'charAppearance': presetData = this.appearance; break;
+                    case 'charSensitive': presetData = this.sensitive; break;
+                    case 'charFetish': presetData = this.fetish; break;
+                    case 'charLimits': presetData = this.limits; break;
+                    case 'charGender': presetData = this.gender; break;
+                    case 'charAge': presetData = this.age; break;
+                    case 'charRace': presetData = this.race; break;
+                    case 'charOccupation': presetData = this.occupation; break;
+                    case 'charHeight': presetData = this.height; break;
+                    case 'charBackstory': presetData = this.background; break;
+                    default: return;
+                }
+                
+                const field = document.getElementById(fieldId);
+                let currentValues = [];
+                
+                if (field) {
+                    if (field.tagName === 'INPUT') {
+                        isMulti = true;
+                        if (field.value) {
+                            currentValues = field.value.split('、').filter(v => v.trim());
+                        }
+                    } else if (isMulti && field.tagName === 'DIV') {
+                        field.querySelectorAll('.selected-tag').forEach(tag => {
+                            currentValues.push(tag.dataset.value);
+                        });
+                    } else if (field.value) {
+                        currentValues.push(field.value);
+                    }
+                }
+                
+                let html = '<div style="max-height:400px;overflow-y:auto;">';
+                for (const [category, items] of Object.entries(presetData)) {
+                    html += `<h4 style="margin:12px 0 8px;font-size:0.9rem;color:var(--accent);">${category}</h4>`;
+                    html += '<div style="display:flex;flex-wrap:wrap;gap:6px;">';
+                    for (const item of items) {
+                        const isSelected = currentValues.includes(item.name);
+                        html += `<button type="button" class="btn btn-secondary ${isSelected ? 'active' : ''}" onclick="CharacterPresets.togglePreset('${fieldId}', '${item.name}', '${item.desc}', ${isMulti})" style="font-size:0.75rem;padding:4px 8px;margin-bottom:4px;${isSelected ? 'background:var(--accent);color:var(--bg);' : ''}">${item.name}${isSelected ? ' ✓' : ''}</button>`;
+                    }
+                    html += '</div>';
+                }
+                html += '</div>';
+                
+                if (isMulti) {
+                    html += '<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);"><label>已选择：</label><div id="selectedPresets" style="display:flex;flex-wrap:wrap;gap:4px;margin:8px 0;"></div></div>';
+                    html += '<div style="margin-top:8px;"><label>添加自定义：</label><input type="text" id="customPreset" placeholder="输入自定义内容"></div>';
+                    html += '<button class="btn" style="margin-top:8px;" onclick="CharacterPresets.applyCustomMulti(\'' + fieldId + '\')">添加自定义</button>';
+                    html += '<button class="btn btn-primary" style="margin-top:8px;margin-left:8px;" onclick="document.getElementById(\'presetModal\').classList.remove(\'active\')">完成选择</button>';
+                } else {
+                    html += '<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);"><label>自定义输入：</label><input type="text" id="customPreset" placeholder="输入自定义内容"></div>';
+                    html += '<button class="btn" style="margin-top:8px;" onclick="CharacterPresets.applyCustom(\'' + fieldId + '\')">应用自定义</button>';
+                }
+                
+                document.getElementById('presetModalBody').innerHTML = html;
+                document.getElementById('presetModalTitle').textContent = isMulti ? '选择预设（多选）' : '选择预设';
+                document.getElementById('presetModal').classList.add('active');
+                
+                if (isMulti) {
+                    this.updateSelectedDisplay(fieldId);
+                }
+            },
+            
+            togglePreset(fieldId, name, desc, isMulti) {
+                const field = document.getElementById(fieldId);
+                if (!field) return;
+                
+                if (isMulti || field.tagName === 'INPUT') {
+                    const currentValue = field.value || '';
+                    const values = currentValue ? currentValue.split('、').filter(v => v.trim()) : [];
+                    
+                    if (!values.includes(name)) {
+                        values.push(name);
+                        field.value = values.join('、');
+                    } else {
+                        const idx = values.indexOf(name);
+                        values.splice(idx, 1);
+                        field.value = values.join('、');
+                    }
+                    
+                    document.getElementById('presetModal').classList.remove('active');
+                } else {
+                    if (field) {
+                        field.value = name;
+                    }
+                    document.getElementById('presetModal').classList.remove('active');
+                }
+            },
+            
+            updateSelectedDisplay(fieldId) {
+                const field = document.getElementById(fieldId);
+                const display = document.getElementById('selectedPresets');
+                if (!field || !display) return;
+                
+                const selected = [];
+                field.querySelectorAll('.selected-tag').forEach(tag => {
+                    selected.push(tag.dataset.value);
+                });
+                display.innerHTML = selected.map(s => `<span style="padding:4px 8px;background:var(--accent);color:var(--bg);border-radius:4px;font-size:0.75rem;">${s}</span>`).join('');
+            },
+            
+            refreshPickerButtons(fieldId) {
+                const field = document.getElementById(fieldId);
+                if (!field) return;
+                
+                const selected = [];
+                field.querySelectorAll('.selected-tag').forEach(tag => {
+                    selected.push(tag.dataset.value);
+                });
+                
+                document.querySelectorAll('#presetModalBody .btn-secondary').forEach(btn => {
+                    const name = btn.textContent.replace(' ✓', '').replace(' ×', '');
+                    const isSelected = selected.includes(name);
+                    if (isSelected) {
+                        btn.classList.add('active');
+                        btn.style.background = 'var(--accent)';
+                        btn.style.color = 'var(--bg)';
+                        btn.innerHTML = name + ' ✓';
+                    } else {
+                        btn.classList.remove('active');
+                        btn.style.background = '';
+                        btn.style.color = '';
+                        btn.innerHTML = name;
+                    }
+                });
+            },
+            
+            selectPreset(fieldId, name, desc) {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    field.value = name;
+                }
+                document.getElementById('presetModal').classList.remove('active');
+            },
+            
+            applyCustom(fieldId) {
+                const value = document.getElementById('customPreset')?.value;
+                if (value) {
+                    const field = document.getElementById(fieldId);
+                    if (field) {
+                        field.value = value;
+                    }
+                }
+                document.getElementById('presetModal').classList.remove('active');
+            },
+            
+            applyCustomMulti(fieldId) {
+                const value = document.getElementById('customPreset')?.value;
+                if (value) {
+                    const field = document.getElementById(fieldId);
+                    if (field && field.tagName === 'INPUT') {
+                        const currentValue = field.value || '';
+                        const values = currentValue ? currentValue.split('、').filter(v => v.trim()) : [];
+                        if (!values.includes(value)) {
+                            values.push(value);
+                            field.value = values.join('、');
+                        }
+                        document.getElementById('customPreset').value = '';
+                    } else if (field) {
+                        const tag = document.createElement('span');
+                        tag.className = 'selected-tag';
+                        tag.dataset.value = value;
+                        tag.style.cssText = 'display:inline-block;padding:4px 8px;background:var(--accent);color:var(--bg);border-radius:4px;font-size:0.75rem;margin:2px;';
+                        tag.textContent = value + ' ×';
+                        tag.onclick = function() { this.remove(); };
+                        field.appendChild(tag);
+                        document.getElementById('customPreset').value = '';
+                    }
+                }
+                this.updateSelectedDisplay(fieldId);
+            },
+            
+            getMultiSelectValues(fieldId) {
+                const field = document.getElementById(fieldId);
+                if (!field) return [];
+                const values = [];
+                field.querySelectorAll('.selected-tag').forEach(tag => {
+                    values.push(tag.dataset.value);
+                });
+                return values;
+            }
+        };
+        
+        CharacterPresets.load();
+        
+        (function() {
+            const mobileNavItems = [
+                { page: 'plugins', icon: '🔌', label: '插件', url: '../../../index.html?page=plugins' },
+                { page: 'home', icon: '🏠', label: '首页', url: '../../../index.html' },
+                { page: 'character-editor', icon: '🧩', label: '角色', url: '' },
+                { page: 'inventory', icon: '🎒', label: '物品', url: '../inventory/index.html' },
+                { page: 'settings', icon: '⚙️', label: '设置', url: '../../../index.html?page=settings' }
+            ];
+            
+            function init() {
+                setupMobileNav();
+                document.getElementById('navContainer').innerHTML = NavSystem.generateNav('character-editor', true);
+                renderCharacterEditorPage();
+            }
+
+            function setupMobileNav() {
+                const mobileNav = document.getElementById('mobileNav');
+                if (!mobileNav) return;
+                
+                mobileNav.innerHTML = mobileNavItems.map(item => `
+                    <button class="mobile-nav-btn ${item.url === '' ? 'active' : ''}" data-url="${item.url}">
+                        <span class="icon">${item.icon}</span>
+                        <span class="label">${item.label}</span>
+                    </button>
+                `).join('');
+                
+                mobileNav.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const url = btn.dataset.url;
+                        if (url) {
+                            window.location.href = url;
+                        }
+                    });
+                });
+            }
+
+            function renderCharacterEditorPage() {
+                const world = Data.getCurrentWorld();
+                const main = document.getElementById('mainContent');
+                const right = document.getElementById('rightPanel');
+                
+                if (!world) {
+                    main.innerHTML = `<h2>角色插件</h2><p class="desc">请先选择一个世界</p><div class="empty">请先在"世界"页面选择一个世界</div>`;
+                    return;
+                }
+                
+                const chars = Data.getCharacters(world.id);
+                
+                main.innerHTML = `
+                    <h2>角色插件</h2>
+                    <p class="desc">当前世界：${world.name}</p>
+                    
+                    <div style="display: flex; gap: 12px; margin-bottom: 20px;">
+                        <button class="btn" onclick="showCreateCharacter()">+ 创建角色</button>
+                        <button class="btn" onclick="showImportCharacter()">📤 导入角色</button>
+                        <button class="btn" onclick="showExportCharacter()">📥 导出角色</button>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+                        ${chars.map(c => `
+                            <div class="card">
+                                <div class="title">${c.name}</div>
+                                <div class="meta">${c.role} · ${c.gender} · ${c.age}岁</div>
+                                ${c.appearance ? `<p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 8px;">${c.appearance.substring(0, 60)}...</p>` : ''}
+                                <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
+                                    <button class="btn btn-secondary" onclick="editCharacter('${c.id}')" style="padding: 6px 12px; font-size: 0.8rem;">详细编辑</button>
+                                    <button class="btn btn-secondary" onclick="deleteCharacter('${c.id}')" style="padding: 6px 12px; font-size: 0.8rem;">删除</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                        ${chars.length === 0 ? '<div class="empty">暂无角色，点击上方创建</div>' : ''}
+                    </div>
+                `;
+                
+                right.innerHTML = `
+                    <h4 style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 16px;">当前世界</h4>
+                    <div class="card" style="cursor: default;">
+                        <div class="title">${world.name}</div>
+                        <div class="meta">${world.type} · ${chars.length}个角色</div>
+                    </div>
+                    ${chars.slice(0, 3).map(c => `
+                        <div class="char-mini">
+                            <div class="avatar">${c.name[0]}</div>
+                            <div class="info">
+                                <div class="name">${c.name}</div>
+                                <div class="role">${c.role}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                    ${chars.length > 3 ? `<p style="font-size: 0.8rem; color: var(--text-dim);">+${chars.length - 3}个角色</p>` : ''}
+                `;
+            }
+
+            window.showCreateCharacter = function() {
+                document.getElementById('modalTitle').textContent = '创建角色';
+                document.getElementById('modalBody').innerHTML = `
+                    <div class="char-tabs" id="createCharTabs">
+                        <button class="tab-btn active" data-tab="basic">📋 基础</button>
+                        <button class="tab-btn" data-tab="personality">🎭 性格</button>
+                        <button class="tab-btn" data-tab="background">📖 背景</button>
+                        <button class="tab-btn" data-tab="adult">🔞 色色</button>
+                    </div>
+                    <div id="createCharContent">
+                        <p style="font-size:0.8rem;color:var(--text-dim);margin-bottom:12px;">💡 点击字段旁的"📋"可选择预设</p>
+                        <div class="form-group">
+                            <label>角色名 *</label>
+                            <input type="text" id="charName" placeholder="例如：小美">
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>性别</label>
+                                <div style="display:flex;gap:4px;">
+                                    <select id="charGender">
+                                        <option value="女">女</option>
+                                        <option value="男">男</option>
+                                        <option value="扶她">扶她</option>
+                                    </select>
+                                    <button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker('charGender')" title="选择预设" style="padding:4px 8px;">📋</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>角色定位</label>
+                                <div style="display:flex;gap:4px;">
+                                    <select id="charRole"><option value="主角">主角</option><option value="女主">女主</option><option value="配角">配角</option></select>
+                                    <button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker('charRole')" title="选择预设" style="padding:4px 8px;">📋</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>年龄</label>
+                                <div style="display:flex;gap:4px;">
+                                    <input type="number" id="charAge" value="18">
+                                    <button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker('charAge')" title="选择预设" style="padding:4px 8px;">📋</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>种族</label>
+                                <div style="display:flex;gap:4px;">
+                                    <input type="text" id="charRace" placeholder="例如：人类">
+                                    <button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker('charRace')" title="选择预设" style="padding:4px 8px;">📋</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>职业</label>
+                                <div style="display:flex;gap:4px;">
+                                    <input type="text" id="charOccupation" placeholder="例如：学生">
+                                    <button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker('charOccupation')" title="选择预设" style="padding:4px 8px;">📋</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>身高</label>
+                                <div style="display:flex;gap:4px;">
+                                    <input type="text" id="charHeight" placeholder="例如：165cm">
+                                    <button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker('charHeight')" title="选择预设" style="padding:4px 8px;">📋</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>外貌描述</label>
+                            <div id="charAppearance" style="display:flex;flex-wrap:wrap;gap:4px;min-height:60px;padding:8px;border:1px solid var(--border);border-radius:4px;"></div>
+                            <button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker('charAppearance', true)" title="选择预设" style="margin-top:4px;">📋 选择预设</button>（多选）
+                        </div>
+                    </div>
+                    <div style="margin-top:20px;display:flex;gap:10px;">
+                        <button class="btn" onclick="createCharacter()">创建角色</button>
+                        <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+                    </div>
+                `;
+                setupCreateCharTabs();
+                document.getElementById('modal').classList.add('active');
+            };
+            
+            function setupCreateCharTabs() {
+                document.querySelectorAll('#createCharTabs .tab-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const currentTab = document.querySelector('#createCharTabs .tab-btn.active').dataset.tab;
+                        saveCurrentTabData(currentTab);
+                        
+                        document.querySelectorAll('#createCharTabs .tab-btn').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        const tab = this.dataset.tab;
+                        const content = document.getElementById('createCharContent');
+                        let html = '<p style="font-size:0.8rem;color:var(--text-dim);margin-bottom:12px;">💡 点击字段旁的"📋"可选择预设</p>';
+                        if (tab === 'basic') {
+                            html += '<div class="form-group"><label>角色名 *</label><input type="text" id="charName" placeholder="例如：小美"></div>';
+                            html += '<div class="form-grid">';
+                            html += '<div class="form-group"><label>性别</label><div style="display:flex;gap:4px;"><select id="charGender"><option value="女">女</option><option value="男">男</option><option value="扶她">扶她</option></select><button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker(\'charGender\')" title="选择预设" style="padding:4px 8px;">📋</button></div></div>';
+                            html += '<div class="form-group"><label>角色定位</label><div style="display:flex;gap:4px;"><select id="charRole"><option value="主角">主角</option><option value="女主">女主</option><option value="配角">配角</option></select><button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker(\'charRole\')" title="选择预设" style="padding:4px 8px;">📋</button></div></div>';
+                            html += '<div class="form-group"><label>年龄</label><div style="display:flex;gap:4px;"><input type="number" id="charAge" value="18"><button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker(\'charAge\')" title="选择预设" style="padding:4px 8px;">📋</button></div></div>';
+                            html += '<div class="form-group"><label>种族</label><div style="display:flex;gap:4px;"><input type="text" id="charRace" placeholder="例如：人类"><button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker(\'charRace\')" title="选择预设" style="padding:4px 8px;">📋</button></div></div>';
+                            html += '<div class="form-group"><label>职业</label><div style="display:flex;gap:4px;"><input type="text" id="charOccupation" placeholder="例如：学生"><button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker(\'charOccupation\')" title="选择预设" style="padding:4px 8px;">📋</button></div></div>';
+                            html += '<div class="form-group"><label>身高</label><div style="display:flex;gap:4px;"><input type="text" id="charHeight" placeholder="例如：165cm"><button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker(\'charHeight\')" title="选择预设" style="padding:4px 8px;">📋</button></div></div>';
+                            html += '</div>';
+                            html += '<div class="form-group"><label>外貌描述</label><div style="display:flex;gap:4px;"><input type="text" id="charAppearance" placeholder="例如：黑发、大眼睛" style="flex:1;"><button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker(\'charAppearance\')" title="选择预设" style="padding:4px 8px;">📋</button></div></div>';
+                        } else if (tab === 'personality') {
+                            html += '<div class="form-group"><label>性格类型</label><div style="display:flex;gap:4px;"><input type="text" id="charPersonality" placeholder="例如：活泼、内向"><button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker(\'charPersonality\')" title="选择预设" style="padding:4px 8px;">📋</button></div></div>';
+                            html += '<div class="form-group"><label>兴趣爱好</label><div style="display:flex;gap:4px;"><input type="text" id="charHobby" placeholder="例如：看书、跑步"><button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker(\'charHobby\')" title="选择预设" style="padding:4px 8px;">📋</button></div></div>';
+                            html += '<div class="form-group"><label>喜欢的事物</label><div style="display:flex;gap:4px;"><input type="text" id="charFavorite" placeholder="例如：甜点、音乐"><button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker(\'charFavorite\')" title="选择预设" style="padding:4px 8px;">📋</button></div></div>';
+                            html += '<div class="form-group"><label>讨厌的事物</label><div style="display:flex;gap:4px;"><input type="text" id="charDislike" placeholder="例如：昆虫、孤单"><button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker(\'charDislike\')" title="选择预设" style="padding:4px 8px;">📋</button></div></div>';
+                        } else if (tab === 'background') {
+                            html += '<div class="form-group"><label>出身背景</label><div style="display:flex;gap:4px;"><input type="text" id="charBackstory" placeholder="例如：富二代、孤儿"><button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker(\'charBackstory\')" title="选择预设" style="padding:4px 8px;">📋</button></div></div>';
+                            html += '<div class="form-group"><label>口头禅</label><input type="text" id="charCatchphrase" placeholder="例如：人家知道了~"></div>';
+                            html += '<div class="form-group"><label>关系</label><textarea id="charRelationship" rows="3" placeholder="例如：主角的青梅竹马、魔王的女儿"></textarea></div>';
+                        } else if (tab === 'adult') {
+                            html += '<div class="form-group"><label>性取向</label><select id="charSexuality"><option value="异性恋">异性恋</option><option value="同性恋">同性恋</option><option value="双性恋">双性恋</option></select></div>';
+                            html += '<div class="form-group"><label>敏感部位</label><div style="display:flex;gap:4px;"><input type="text" id="charSensitive" placeholder="例如：耳朵、颈部"><button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker(\'charSensitive\')" title="选择预设" style="padding:4px 8px;">📋</button></div></div>';
+                            html += '<div class="form-group"><label>性癖好</label><div style="display:flex;gap:4px;"><input type="text" id="charFetish" placeholder="例如：制服、玩具"><button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker(\'charFetish\')" title="选择预设" style="padding:4px 8px;">📋</button></div></div>';
+                            html += '<div class="form-group"><label>底线/雷区</label><div style="display:flex;gap:4px;"><input type="text" id="charLimits" placeholder="例如：不愿意、底线"><button type="button" class="btn btn-secondary" onclick="CharacterPresets.showPresetPicker(\'charLimits\')" title="选择预设" style="padding:4px 8px;">📋</button></div></div>';
+                            html += '<div class="form-group"><label>性幻想</label><textarea id="charFantasies" rows="2" placeholder="描述角色的性幻想..."></textarea></div>';
+                        }
+                        content.innerHTML = html;
+                        restoreTabData(tab);
+                    });
+                });
+            }
+            
+            const characterFormData = {};
+            
+            function saveCurrentTabData(tab) {
+                if (characterFormData[tab]) return;
+                characterFormData[tab] = {};
+                if (tab === 'basic') {
+                    const ids = ['charName', 'charGender', 'charRole', 'charAge', 'charRace', 'charOccupation', 'charHeight'];
+                    ids.forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) characterFormData[tab][id] = el.value;
+                    });
+                    const el = document.getElementById('charAppearance');
+                    if (el) characterFormData[tab].charAppearance = el.value;
+                } else if (tab === 'personality') {
+                    const personalityEl = document.getElementById('charPersonality');
+                    if (personalityEl) characterFormData[tab].charPersonality = personalityEl.value;
+                    const hobbyEl = document.getElementById('charHobby');
+                    if (hobbyEl) characterFormData[tab].charHobby = hobbyEl.value;
+                    const favoriteEl = document.getElementById('charFavorite');
+                    if (favoriteEl) characterFormData[tab].charFavorite = favoriteEl.value;
+                    const dislikeEl = document.getElementById('charDislike');
+                    if (dislikeEl) characterFormData[tab].charDislike = dislikeEl.value;
+                } else if (tab === 'background') {
+                    const backstoryEl = document.getElementById('charBackstory');
+                    if (backstoryEl) characterFormData[tab].charBackstory = backstoryEl.value;
+                    const el = document.getElementById('charCatchphrase');
+                    if (el) characterFormData[tab].charCatchphrase = el.value;
+                    const relEl = document.getElementById('charRelationship');
+                    if (relEl) characterFormData[tab].charRelationship = relEl.value;
+                } else if (tab === 'adult') {
+                    const el = document.getElementById('charSexuality');
+                    if (el) {
+                        characterFormData[tab].charSexuality = el.value;
+                    }
+                    const sensitiveEl = document.getElementById('charSensitive');
+                    if (sensitiveEl) characterFormData[tab].charSensitive = sensitiveEl.value;
+                    const fetishEl = document.getElementById('charFetish');
+                    if (fetishEl) characterFormData[tab].charFetish = fetishEl.value;
+                    const limitsEl = document.getElementById('charLimits');
+                    if (limitsEl) characterFormData[tab].charLimits = limitsEl.value;
+                    const fantasiesEl = document.getElementById('charFantasies');
+                    if (fantasiesEl) characterFormData[tab].charFantasies = fantasiesEl.value;
+                }
+            }
+            
+            function restoreTabData(tab) {
+                if (!characterFormData[tab]) return;
+                if (tab === 'basic') {
+                    if (characterFormData[tab].charName) document.getElementById('charName').value = characterFormData[tab].charName;
+                    if (characterFormData[tab].charGender) document.getElementById('charGender').value = characterFormData[tab].charGender;
+                    if (characterFormData[tab].charRole) document.getElementById('charRole').value = characterFormData[tab].charRole;
+                    if (characterFormData[tab].charAge) document.getElementById('charAge').value = characterFormData[tab].charAge;
+                    if (characterFormData[tab].charRace) document.getElementById('charRace').value = characterFormData[tab].charRace;
+                    if (characterFormData[tab].charOccupation) document.getElementById('charOccupation').value = characterFormData[tab].charOccupation;
+                    if (characterFormData[tab].charHeight) document.getElementById('charHeight').value = characterFormData[tab].charHeight;
+                    if (characterFormData[tab].charAppearance) document.getElementById('charAppearance').value = characterFormData[tab].charAppearance;
+                } else if (tab === 'personality') {
+                    if (characterFormData[tab].charPersonality) document.getElementById('charPersonality').value = characterFormData[tab].charPersonality;
+                    if (characterFormData[tab].charHobby) document.getElementById('charHobby').value = characterFormData[tab].charHobby;
+                    if (characterFormData[tab].charFavorite) document.getElementById('charFavorite').value = characterFormData[tab].charFavorite;
+                    if (characterFormData[tab].charDislike) document.getElementById('charDislike').value = characterFormData[tab].charDislike;
+                } else if (tab === 'background') {
+                    if (characterFormData[tab].charBackstory) document.getElementById('charBackstory').value = characterFormData[tab].charBackstory;
+                    if (characterFormData[tab].charCatchphrase) document.getElementById('charCatchphrase').value = characterFormData[tab].charCatchphrase;
+                    if (characterFormData[tab].charRelationship) document.getElementById('charRelationship').value = characterFormData[tab].charRelationship;
+                } else if (tab === 'adult') {
+                    if (characterFormData[tab].charSexuality) document.getElementById('charSexuality').value = characterFormData[tab].charSexuality;
+                    if (characterFormData[tab].charSensitive) document.getElementById('charSensitive').value = characterFormData[tab].charSensitive;
+                    if (characterFormData[tab].charFetish) document.getElementById('charFetish').value = characterFormData[tab].charFetish;
+                    if (characterFormData[tab].charLimits) document.getElementById('charLimits').value = characterFormData[tab].charLimits;
+                    if (characterFormData[tab].charFantasies) document.getElementById('charFantasies').value = characterFormData[tab].charFantasies;
+                }
+            }
+            
+            function restoreMultiSelect(fieldId, values) {
+                if (!values || !Array.isArray(values)) return;
+                const field = document.getElementById(fieldId);
+                if (!field) return;
+                values.forEach(val => {
+                    const tag = document.createElement('span');
+                    tag.className = 'selected-tag';
+                    tag.dataset.value = val;
+                    tag.style.cssText = 'display:inline-block;padding:4px 8px;background:var(--accent);color:var(--bg);border-radius:4px;font-size:0.75rem;margin:2px;';
+                    tag.textContent = val + ' ×';
+                    tag.onclick = function() { this.remove(); };
+                    field.appendChild(tag);
+                });
+            }
+
+            window.createCharacter = function() {
+                const world = Data.getCurrentWorld();
+                if (!world) return;
+                const nameInput = document.getElementById('charName');
+                if (!nameInput || !nameInput.value) {
+                    alert('请输入角色名称');
+                    return;
+                }
+                const name = nameInput.value;
+                
+                ['basic', 'personality', 'background', 'adult'].forEach(tab => {
+                     saveCurrentTabData(tab);
+                 });
+                
+                const profile = {
+                    race: characterFormData.basic?.charRace || document.getElementById('charRace')?.value || '',
+                    occupation: characterFormData.basic?.charOccupation || document.getElementById('charOccupation')?.value || '',
+                    height: characterFormData.basic?.charHeight || document.getElementById('charHeight')?.value || '',
+                    appearance: characterFormData.basic?.charAppearance || document.getElementById('charAppearance')?.value || '',
+                    personality: characterFormData.personality?.charPersonality || document.getElementById('charPersonality')?.value || '',
+                    hobby: characterFormData.personality?.charHobby || document.getElementById('charHobby')?.value || '',
+                    favorite: characterFormData.personality?.charFavorite || document.getElementById('charFavorite')?.value || '',
+                    dislike: characterFormData.personality?.charDislike || document.getElementById('charDislike')?.value || '',
+                    backstory: characterFormData.background?.charBackstory || document.getElementById('charBackstory')?.value || '',
+                    catchphrase: characterFormData.background?.charCatchphrase || document.getElementById('charCatchphrase')?.value || ''
+                };
+                
+                const adultProfile = {};
+                const sexualityEl = document.getElementById('charSexuality');
+                if (sexualityEl || characterFormData.adult) {
+                    adultProfile.sexuality = characterFormData.adult?.charSexuality || sexualityEl?.value || '异性恋';
+                    
+                    adultProfile.sensitiveParts = characterFormData.adult?.charSensitive || document.getElementById('charSensitive')?.value || '';
+                    adultProfile.fetish = characterFormData.adult?.charFetish || document.getElementById('charFetish')?.value || '';
+                    adultProfile.limits = characterFormData.adult?.charLimits || document.getElementById('charLimits')?.value || '';
+                    adultProfile.fantasies = characterFormData.adult?.charFantasies || document.getElementById('charFantasies')?.value || '';
+                }
+                
+                Data.createCharacter(world.id, {
+                    name,
+                    gender: document.getElementById('charGender')?.value || characterFormData.basic?.charGender || '女',
+                    role: document.getElementById('charRole')?.value || characterFormData.basic?.charRole || '配角',
+                    age: parseInt(document.getElementById('charAge')?.value) || characterFormData.basic?.charAge || 18,
+                    profile,
+                    adultProfile,
+                    relationship: characterFormData.background?.charRelationship || document.getElementById('charRelationship')?.value || ''
+                });
+                
+                for (let key in characterFormData) delete characterFormData[key];
+                
+                alert('角色创建成功');
+                closeModal();
+                renderCharacterEditorPage();
+            };
+
+            window.editCharacter = function(id) {
+                const world = Data.getCurrentWorld();
+                if (!world) return;
+                const char = Data.getCharacter(world.id, id);
+                if (!char) return;
+                
+                const editorHtml = View.render('character.main', world.id, id);
+                
+                document.getElementById('modalTitle').textContent = `${char.name} - 详细编辑`;
+                document.getElementById('modalBody').innerHTML = editorHtml;
+                document.getElementById('modal').classList.add('active');
+                
+                const tabContainer = document.querySelector('#modalBody .char-tabs');
+                const content = document.getElementById('charTabContent');
+                if (tabContainer && content) {
+                    const wId = tabContainer.dataset.worldId;
+                    const cId = tabContainer.dataset.characterId;
+                    content.innerHTML = View.render('character.basic', wId, cId);
+                    
+                    tabContainer.querySelectorAll('.tab-btn').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            tabContainer.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                            this.classList.add('active');
+                            const tab = this.dataset.tab;
+                            content.innerHTML = View.render('character.' + tab, wId, cId);
+                        });
+                    });
+                }
+            };
+
+            window.deleteCharacter = function(id) {
+                if (confirm('确定删除该角色吗？此操作不可撤销。')) {
+                    const world = Data.getCurrentWorld();
+                    Data.deleteCharacter(world.id, id);
+                    alert('角色删除成功');
+                    renderCharacterEditorPage();
+                }
+            };
+
+            window.showImportCharacter = function() {
+                document.getElementById('modalTitle').textContent = '导入角色';
+                document.getElementById('modalBody').innerHTML = `
+                    <div class="form-group">
+                        <label>角色JSON数据</label>
+                        <textarea id="charJson" rows="10" placeholder="粘贴角色JSON数据"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>或选择文件导入</label>
+                        <input type="file" id="charJsonFile" accept=".json" onchange="importCharacterFromFile()">
+                    </div>
+                    <button class="btn" onclick="importCharacter()">导入</button>
+                `;
+                document.getElementById('modal').classList.add('active');
+            };
+
+            window.importCharacterFromFile = function() {
+                const fileInput = document.getElementById('charJsonFile');
+                const file = fileInput.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('charJson').value = e.target.result;
+                };
+                reader.readAsText(file);
+            };
+
+            window.importCharacter = function() {
+                const world = Data.getCurrentWorld();
+                if (!world) return;
+                const jsonStr = document.getElementById('charJson').value;
+                if (!jsonStr) {
+                    alert('请输入角色JSON数据');
+                    return;
+                }
+                try {
+                    const charData = JSON.parse(jsonStr);
+                    Data.createCharacter(world.id, charData);
+                    alert('角色导入成功');
+                    closeModal();
+                    renderCharacterEditorPage();
+                } catch (e) {
+                    alert('JSON格式错误，请检查数据');
+                }
+            };
+
+            window.showExportCharacter = function() {
+                const world = Data.getCurrentWorld();
+                if (!world) return;
+                const chars = Data.getCharacters(world.id);
+                if (chars.length === 0) {
+                    alert('暂无角色可导出');
+                    return;
+                }
+                
+                document.getElementById('modalTitle').textContent = '导出角色';
+                document.getElementById('modalBody').innerHTML = `
+                    <div class="form-group">
+                        <label>选择角色</label>
+                        <select id="exportCharId">
+                            ${chars.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>角色数据</label>
+                        <textarea id="exportJson" rows="10" readonly></textarea>
+                    </div>
+                    <div style="display:flex;gap:10px;">
+                        <button class="btn" onclick="copyExportData()">复制数据</button>
+                        <button class="btn" onclick="exportCharacterToFile()">导出到文件</button>
+                    </div>
+                `;
+                
+                const firstCharId = chars[0].id;
+                const firstChar = Data.getCharacter(world.id, firstCharId);
+                document.getElementById('exportJson').value = JSON.stringify(firstChar, null, 2);
+                
+                document.getElementById('exportCharId').addEventListener('change', function() {
+                    const charId = this.value;
+                    const char = Data.getCharacter(world.id, charId);
+                    document.getElementById('exportJson').value = JSON.stringify(char, null, 2);
+                });
+                
+                document.getElementById('modal').classList.add('active');
+            };
+
+            window.copyExportData = function() {
+                const jsonData = document.getElementById('exportJson').value;
+                navigator.clipboard.writeText(jsonData).then(function() {
+                    alert('数据已复制到剪贴板');
+                }, function() {
+                    alert('复制失败，请手动复制');
+                });
+            };
+
+            window.exportCharacterToFile = function() {
+                const jsonData = document.getElementById('exportJson').value;
+                const charName = document.querySelector('#exportCharId option:checked')?.textContent || 'character';
+                const blob = new Blob([jsonData], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = charName + '.json';
+                a.click();
+                URL.revokeObjectURL(url);
+            };
+
+            window.closeModal = function() {
+                document.getElementById('modal').classList.remove('active');
+                renderCharacterEditorPage();
+            };
+
+            init();
+        })();
+    </script>
+</body>
+</html>
